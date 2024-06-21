@@ -1,10 +1,101 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>장바구니</title>
+    <link rel="stylesheet" href="../css/songstyle.css" />
   </head>
-  <body></body>
+  <body>
+    <div class="container">
+      <div class="money">
+        <span>소지금 :</span>
+        <span id="nowmoney">10000000원</span>
+      </div>
+      <div class="cart" id="cart-items">
+        <!-- 장바구니 아이템들이 여기에 추가됩니다 -->
+      </div>
+      <form action="/buy" method="post">
+        <button type="submit" class="submit-btn">결정</button>
+      </form>
+    </div>
+    <script>
+      // 예시 데이터
+      const cartData = [
+        { name: "GPT식탁", price: 10000 },
+        { name: "요술망치", price: 9900 },
+        { name: "요술망치", price: 9900 },
+        { name: "요술망치", price: 9900 },
+        { name: "요술망치", price: 9900 },
+        { name: "요술망치", price: 9900 },
+        { name: "요술망치", price: 9900 },
+        { name: "요술망치", price: 9900 },
+        { name: "요술망치", price: 9900 },
+        { name: "요술망치", price: 9900 },
+        { name: "요술망치", price: 9900 },
+        { name: "요술망치", price: 9900 },
+        { name: "요술망치", price: 9900 },
+        { name: "요술망치", price: 9900 },
+      ];
+
+      const cartItemsContainer = document.getElementById("cart-items");
+      const nowmoneyElement = document.getElementById("nowmoney");
+
+      // 소지금 설정 (예시로 10000000원 설정)
+
+      let nowmoney = 10000000; // 이 숫자 부분을 db에서 받아와서 변경해주기
+      nowmoneyElement.textContent = `${nowmoney.toLocaleString()}원`;
+
+      // 장바구니에 아이템 추가
+      cartData.forEach((item) => {
+        const itemElement = document.createElement("div");
+        itemElement.className = "cart-item";
+        itemElement.innerHTML = `<span class="item-name">${
+          item.name
+        }</span><span class="item-price">${item.price.toLocaleString()}원</span>`;
+        cartItemsContainer.appendChild(itemElement);
+      });
+
+      // 소지금 업데이트 함수 (구매 후)
+      function updateMoney(newAmount) {
+        nowmoney = newAmount;
+        nowmoneyElement.textContent = `${nowmoney.toLocaleString()}원`;
+      }
+
+      // 장바구니 데이터 전송
+      document
+        .querySelector("form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          // 데이터 처리 로직 (예: 서버로 데이터 전송)
+          const formData = new FormData();
+          cartData.forEach((item) => {
+            formData.append("items[]", `${item.name},${item.price}`);
+          });
+
+          // 예시로 콘솔에 출력
+          for (let pair of formData.entries()) {
+            console.log(pair[0] + ", " + pair[1]);
+          }
+
+          // AJAX 요청 예시 (fetch API)
+          fetch("/buy", {
+            method: "POST",
+            body: formData,
+          })
+            .then((response) => response.text())
+            .then((data) => {
+              console.log("Success:", data);
+              // 소지금 업데이트 (예시)
+              updateMoney(
+                nowmoney - cartData.reduce((sum, item) => sum + item.price, 0)
+              );
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
+        });
+    </script>
+  </body>
 </html>
