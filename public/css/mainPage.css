@@ -1,7 +1,9 @@
 * {
   margin: 0;
   padding: 0;
+  overflow: hidden;
 }
+
 #root {
   width: 100%;
   height: 100vh;
@@ -12,6 +14,8 @@
   flex-direction: column;
   position: relative;
 }
+
+/* 제품 정보 */
 #Item_Information {
   width: 20%;
   height: 150px;
@@ -25,6 +29,8 @@
   position: absolute;
   top: 100px;
 }
+
+/* 환영 텍스트 */
 #welcomeText {
   width: 70%;
   height: 100px;
@@ -34,5 +40,103 @@
   align-items: center;
   font-size: 30px;
   position: absolute;
-  bottom: 100px;
+  bottom: 500px; /* 위치 조정 */
+}
+
+/* 아이템 목록 */
+#desk {
+  width: 100vw;
+  height: 400px;
+  background-color: #8b4513;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  border: 2px solid #5c3317;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background: linear-gradient(45deg, #8b4513, #a0522d);
+  position: absolute;
+  bottom: 0;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.price {
+  margin-top: 10px;
+  background-color: #ffd700;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 0 4px #c5a300;
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+
+.price:hover {
+  background-color: #ffcc00;
+}
+
+.price:active {
+  box-shadow: 0 2px #c5a300;
+  transform: translateY(2px);
+}
+
+/* 사이드바 */
+.container {
+  width: 300px;
+  height: 100vh;
+  background-color: #f9f9f9;
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border-left: 2px solid #ccc;
+}
+
+.money {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.cart {
+  flex: 1;
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
+  overflow-y: auto;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+}
+
+.item-name {
+  flex: 1;
+}
+
+.item-price {
+  flex: 0 0 80px;
+  text-align: right;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: red;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
 }
