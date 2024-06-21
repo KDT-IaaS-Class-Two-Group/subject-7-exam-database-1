@@ -2,3 +2,36 @@
   margin: 0;
   padding: 0;
 }
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(27,27,27,0.6);
+}
+
+#receipt {
+  box-sizing: border-box;
+  padding: 10px;
+  width: 280px;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  color: black;
+}
+
+#receipt > div:nth-child(4) {
+  width: 280px;
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+}
