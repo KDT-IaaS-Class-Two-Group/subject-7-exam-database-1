@@ -1,5 +1,7 @@
 const http = require('node:http');
+
 const fs = require('node:fs');
+
 const path = require('node:path');
 
 const PORT = 8080;
@@ -30,6 +32,9 @@ const server = http.createServer((req, res) => {
   }
 });
 
-server.listen(PORT, () => {
+server.listen(PORT, (err) => {
+  if(err) {
+    return new Error('에러가 발생했습니다. :', err);
+  }
   console.log('서버가 연결되었습니다.');
 });
