@@ -14,6 +14,13 @@ a {
   flex-direction: column;
 }
 
+h1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50%;
+}
+
 #link {
   display: flex;
   justify-content: space-evenly;
