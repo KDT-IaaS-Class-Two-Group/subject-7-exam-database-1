@@ -10,8 +10,3 @@ const exitBu = document.querySelector('#exit');
 //   div.innerHTML = '<a href="./public/html/mainPage.html">게임시작</a>';
 //   root.appendChild(div);
 // });
-
-exitBu.addEventListener('click', () => {
-  let box = document.createElement('div');
-  let div = document.createElement('div');
-});
