@@ -17,8 +17,8 @@ const server = http.createServer((req, res) => {
     let contentType = 'text/html; charset=UTF-8'; // 기본 값은 HTML로 설정
 
     // 기본적으로 index.html을 제공하도록 설정
-    if (req.url === '/' || req.url === '/index.html') {
-      filePath = path.join(__dirname, 'public', 'html', 'index.html');
+    if (req.url === '/' || req.url === '/start.html') {
+      filePath = path.join(__dirname, 'public', 'html', 'start.html');
     } else {
       // 요청된 URL에 따라 파일 경로 설정
       const ext = path.extname(req.url);
