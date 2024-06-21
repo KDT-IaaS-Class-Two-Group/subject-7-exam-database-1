@@ -37,4 +37,5 @@ server.listen(PORT, (err) => {
     return new Error('에러가 발생했습니다. :', err);
   }
   console.log('서버가 연결되었습니다.');
+  console.log(`http://localhost:${PORT}`);
 });
