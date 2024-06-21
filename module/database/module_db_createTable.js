@@ -11,10 +11,11 @@ const db = new sqlite3.Database('../../database/database.db', (err) => {
 
 // user 테이블 생성 쿼리
 const createUserTableQuery = `
-  CREATE TABLE IF NOT EXISTS user (
+  CREATE TABLE IF NOT EXISTS product (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
-    money INTEGER NOT NULL
+    explain TEXT NOT NULL,
+    price INTEGER NOT NULL
   )
 `;
 
