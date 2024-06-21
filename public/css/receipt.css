@@ -21,12 +21,27 @@
   flex-direction: column;
   gap: 10px;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   background-color: white;
   color: black;
 }
 
-#receipt > div:nth-child(4) {
+#receipt > div:nth-child(1) {
+  width: 280px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#receipt > div:nth-child(3) {
   width: 280px;
   height: 100px;
   display: flex;
