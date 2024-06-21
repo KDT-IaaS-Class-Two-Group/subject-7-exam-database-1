@@ -39,7 +39,7 @@ button {
   border: 2px solid #8b4513;
   border-radius: 5px;
   cursor: pointer;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: 'NeoDunggeunmo';
   text-shadow: 1px 1px 2px #000;
   transition: background-color 0.3s, transform 0.3s;
 }
