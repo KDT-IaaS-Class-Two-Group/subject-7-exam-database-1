@@ -6,7 +6,15 @@ const PORT = process.env.PORT || 8080;
 
 const server = http.createServer((req, res) => {
   if (req.method === 'GET') {
+    // favicon.ico 요청 무시
+    if (req.url === '/favicon.ico') {
+      res.writeHead(204, { 'Content-Type': 'image/x-icon' });
+      res.end();
+      return;
+    }
+
     let filePath;
+    let contentType = 'text/html; charset=UTF-8'; // 기본 값은 HTML로 설정
 
     // 기본적으로 index.html을 제공하도록 설정
     if (req.url === '/' || req.url === '/index.html') {
@@ -14,12 +22,16 @@ const server = http.createServer((req, res) => {
     } else {
       // 요청된 URL에 따라 파일 경로 설정
       const ext = path.extname(req.url);
+
+      // 파일 경로 설정
       if (ext === '.html') {
-        filePath = path.join(__dirname, 'public', 'html', req.url);
+        filePath = path.join(__dirname, 'public', 'html', path.basename(req.url));
       } else if (ext === '.css') {
-        filePath = path.join(__dirname, 'public', 'css', req.url);
+        filePath = path.join(__dirname, 'public', 'css', path.basename(req.url));
+        contentType = 'text/css; charset=UTF-8';
       } else if (ext === '.js') {
-        filePath = path.join(__dirname, 'public', 'script', req.url);
+        filePath = path.join(__dirname, 'public', 'script', path.basename(req.url));
+        contentType = 'application/javascript; charset=UTF-8';
       }
     }
 
@@ -38,15 +50,6 @@ const server = http.createServer((req, res) => {
         }
       } else {
         // 파일이 존재하는 경우 해당 파일을 응답
-        let contentType = 'text/html; charset=UTF-8'; // 기본 값은 HTML로 설정
-
-        // Content-Type 설정
-        if (filePath.endsWith('.css')) {
-          contentType = 'text/css; charset=UTF-8';
-        } else if (filePath.endsWith('.js')) {
-          contentType = 'application/javascript; charset=UTF-8';
-        }
-
         res.writeHead(200, { 'Content-Type': contentType });
         res.end(data);
       }

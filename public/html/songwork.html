@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>장바구니</title>
+    <link rel="stylesheet" href="../css/songstyle.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="money">
+        <span>소지금 :</span>
+        <span id="nowmoney">10000000원</span>
+      </div>
+      <div class="cart" id="cart-items">
+        <!-- 장바구니 아이템들이 여기에 추가됩니다 -->
+      </div>
+      <form action="/buy" method="post">
+        <button type="submit" class="submit-btn">결정</button>
+      </form>
+    </div>
+    <script src="../script/song.js"></script>
+  </body>
+</html>
