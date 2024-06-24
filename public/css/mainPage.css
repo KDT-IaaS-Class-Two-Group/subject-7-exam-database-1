@@ -1,6 +1,10 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+body {
   overflow: hidden;
 }
 
@@ -13,6 +17,7 @@
   align-items: center;
   flex-direction: column;
   position: relative;
+  overflow: hidden;
 }
 
 /* 제품 정보 */
@@ -139,4 +144,55 @@
   border: none;
   cursor: pointer;
   margin-top: 10px;
+}
+
+#receipt {
+  position: absolute;
+  z-index: 3;
+  box-sizing: border-box;
+  padding: 10px;
+  width: 280px;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  color: black;
+  visibility: visible;
+}
+
+#receipt > div:nth-child(1) {
+  width: 280px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#receipt > div:nth-child(3) {
+  width: 280px;
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+}
+
+#partition {
+  position: absolute;
+  z-index: 2;
+  background-color: rgba(27,27,27,0.6);
+  width: 100vw;
+  height: 100vh;
+  visibility: visible;
 }
