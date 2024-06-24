@@ -72,6 +72,11 @@ body {
   align-items: center;
 }
 
+.item img {
+  width: 100px;
+  height: 100px;
+}
+
 .price {
   margin-top: 10px;
   background-color: #ffd700;
