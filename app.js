@@ -34,7 +34,10 @@ const server = http.createServer((req, res) => {
         contentType = 'application/javascript; charset=UTF-8';
       } else if (ext === '.json') {
         filePath = path.join(__dirname, 'public', 'script', path.basename(req.url));
-        contentType = 'application/javascript; charset=UTF-8';
+        contentType = 'application/json; charset=UTF-8';
+      } else if (ext === '.png') {
+        filePath = path.join(__dirname, 'public', 'img', path.basename(req.url));
+        contentType = 'img / png';
       }
     }
 
