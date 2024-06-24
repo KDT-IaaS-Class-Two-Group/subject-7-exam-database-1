@@ -32,3 +32,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   xhr.send(); // GET 요청 전송
 });
+
+const returnMain = document.getElementById('returnMain');
+
+const receipt = document.getElementById('receipt');
+
+const partition = document.getElementById('partition');
+
+
+returnMain.addEventListener('click', ()=>{
+  receipt.style.visibility = 'hidden';
+  partition.style.visibility = 'hidden';
+});
