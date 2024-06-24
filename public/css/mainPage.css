@@ -191,8 +191,17 @@ body {
 #partition {
   position: absolute;
   z-index: 2;
-  background-color: rgba(27,27,27,0.6);
+  background-color: rgba(27, 27, 27, 0.6);
   width: 100vw;
   height: 100vh;
   visibility: visible;
+}
+
+/* 뚝딱이 클릭  */
+#desk {
+  transform: translateY(100%);
+}
+
+.container {
+  transform: translateX(100%);
 }
