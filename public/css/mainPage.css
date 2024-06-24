@@ -50,7 +50,7 @@ body {
 
 /* 아이템 목록 */
 #desk {
-  width: 100vw;
+  width: 80vw;
   height: 400px;
   background-color: #8b4513;
   padding: 20px;
@@ -62,7 +62,8 @@ body {
   border-radius: 10px;
   background: linear-gradient(45deg, #8b4513, #a0522d);
   position: absolute;
-  bottom: 0;
+  bottom: 0px; /* 이전 값: 0 */
+  right: 20vw;
 }
 
 .item {
@@ -95,7 +96,7 @@ body {
 
 /* 사이드바 */
 .container {
-  width: 300px;
+  width: 20vw;
   height: 100vh;
   background-color: #f9f9f9;
   position: absolute;
@@ -191,7 +192,7 @@ body {
 #partition {
   position: absolute;
   z-index: 2;
-  background-color: rgba(27,27,27,0.6);
+  background-color: rgba(27, 27, 27, 0.6);
   width: 100vw;
   height: 100vh;
   visibility: visible;
