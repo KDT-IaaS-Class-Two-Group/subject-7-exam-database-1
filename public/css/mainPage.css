@@ -197,3 +197,12 @@ body {
   height: 100vh;
   visibility: visible;
 }
+
+/* 뚝딱이 클릭  */
+#desk {
+  transform: translateY(100%);
+}
+
+.container {
+  transform: translateX(100%);
+}
