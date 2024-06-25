@@ -3,110 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>MAIN</title>
     <link rel="stylesheet" href="../css/mainPage.css" />
   </head>
   <body>
-    <div id="root">
-      <div id="Item_Information">제품명: <br />제품 설명:</div>
-      <div id="Snappers_Img">
-        <img src="../img/snappersIMG.png.png" alt="건방진 뚝딱이img" />
-      </div>
-      <div id="welcomeText">
-        <img src="../img/welcome-text-img.png" alt="인사창" />
-
-        어서오세요 뚝딱이 상점에!
-      </div>
-      <div id="desk">
-        <div class="item" data-name="푹잠 물약">
-          <img
-            src="../img/Sleep_Potion.png"
-            alt="푹잠 물약"
-            class="hover-zoom"
-          />
-          <button class="price">5,000원</button>
-        </div>
-        <div class="item" data-name="멀미 물약">
-          <img
-            src="../img/sickness_potion.png"
-            alt="멀미 물약"
-            class="hover-zoom"
-          />
-          <button class="price">5,000원</button>
-        </div>
-        <div class="item" data-name="GPT 식탁">
-          <img src="../img/picnick.png" alt="GPT 식탁" class="hover-zoom" />
-          <button class="price">10,000원</button>
-        </div>
-        <div class="item" data-name="요술 망치">
-          <img src="../img/ham.png" alt="요술 망치" class="hover-zoom" />
-          <button class="price">9,900원</button>
-        </div>
-        <div class="item" data-name="정체불명의 알">
-          <img src="../img/Egg.png" alt="정체불명의 알" class="hover-zoom" />
-          <button class="price">8,000원</button>
-        </div>
-        <div class="item" data-name="수명">
-          <img src="../img/life.png" alt="수명" class="hover-zoom" />
-          <button class="price">10,000원</button>
-        </div>
-        <div class="item" data-name="이상한 종이">
-          <img src="../img/paper.png" alt="이상한 종이" class="hover-zoom" />
-          <button class="price">1,000원</button>
-        </div>
-        <div class="item" data-name="신비의 돌">
-          <img src="../img/stone.png" alt="신비의 돌" class="hover-zoom" />
-          <button class="price">7,000원</button>
-        </div>
-        <div class="item" data-name="어디로든 랜덤 문">
-          <img
-            src="../img/door.png"
-            alt="어디로든 랜덤 문"
-            class="hover-zoom"
-          />
-          <button class="price">5,000원</button>
-        </div>
-        <div class="item" data-name="기억의 알약">
-          <img src="../img/pill.png" alt="기억의 알약" class="hover-zoom" />
-          <button class="price">2,500원</button>
-        </div>
-      </div>
-      <div class="container">
-        <div class="money">
-          <span>소지금 :</span>
-          <span id="nowmoney">10000000원</span>
-        </div>
-        <div class="cart" id="cart-items">
-          <!-- 장바구니 아이템들이 여기에 추가됩니다 -->
-        </div>
-        <form action="/buy" method="post">
-          <button type="submit" class="submit-btn">결정</button>
-        </form>
-      </div>
-      <div id="receipt">
-        <div>
-          <h3>영수증</h3>
-        </div>
-        <div id="content">
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum
-            unde placeat commodi impedit. Praesentium expedita aspernatur
-            impedit facere iure unde beatae, quam temporibus eveniet saepe ad,
-            qui repellat assumenda est. Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Nostrum unde placeat commodi impedit. Praesentium
-            expedita aspernatur impedit facere iure unde beatae, quam temporibus
-            eveniet saepe ad, qui repellat assumenda est.
-          </p>
-        </div>
-        <div>
-          <button id="returnMain">더 구매할래</button>
-          <button>상점 나가기</button>
-        </div>
-      </div>
-      <div id="partition"></div>
+    <div class="image-container" role="img" aria-label="어서오세요. 환영합니다.">
+      <img src="../img/welcome-text-img.png" alt="" />
+      <div class="text-overlay">골라보던가~ 뚝딱!</div>
     </div>
-    <script src="../script/mainPage.js"></script>
-    <script src="../script/receipt.js"></script>
-    <script src="../script/snappers.js"></script>
   </body>
 </html>
