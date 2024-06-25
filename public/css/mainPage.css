@@ -175,7 +175,7 @@ body {
 
 #receipt {
   position: absolute;
-  z-index: 3;
+  z-index: 4;
   box-sizing: border-box;
   padding: 10px;
   width: 280px;
@@ -217,7 +217,7 @@ body {
 
 #partition {
   position: absolute;
-  z-index: 2;
+  z-index: 3;
   background-color: rgba(27, 27, 27, 0.6);
   width: 100vw;
   height: 100vh;
