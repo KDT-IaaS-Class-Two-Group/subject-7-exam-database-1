@@ -7,8 +7,5 @@
   },
   "author": "Team-Snappers",
   "license": "MIT",
-  "description": "",
-  "dependencies": {
-    "sqlite3": "^5.1.7"
-  }
+  "description": ""
 }
