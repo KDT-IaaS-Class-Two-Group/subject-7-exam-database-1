@@ -39,13 +39,13 @@ body {
 #welcomeText {
   width: 70%;
   height: 100px;
-  background-color: cadetblue;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 30px;
   position: absolute;
-  bottom: 500px; /* 위치 조정 */
+  bottom: 200px; /* 위치 조정 */
+  color: #f9f9f9;
 }
 
 /* 아이템 목록 */
