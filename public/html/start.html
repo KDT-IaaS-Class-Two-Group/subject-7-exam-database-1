@@ -8,16 +8,22 @@
   </head>
   <body>
     <div id="root">
-      <h1>어서오세요 뚝딱 상점</h1>
+      <h1>어서와요 뚝딱상점!</h1>
       <div id="link">
         <form action="/start" method="post">
-          <label for="id">ID</label>
-          <input type="text" name="id" id="id" /><br /><br />
-          <label for="name">NAME</label>
-          <input type="text" name="name" id="name" /><br /><br />
-          <input type="submit" value="게임 시작" id="start" />
+          <div class="form-group">
+            <label for="id">ID</label>
+            <input type="text" name="id" id="id" />
+          </div>
+          <div class="form-group">
+            <label for="name">NAME</label>
+            <input type="text" name="name" id="name" />
+          </div>
+          <div class="button-group">
+            <input type="submit" value="게임시작" id="start" />
+            <input type="button" value="게임종료" id="exit" />
+          </div>
         </form>
-        <a href="exit.html"><button id="exit">게임 종료</button></a>
       </div>
       <script src="../script/start.js"></script>
     </div>
