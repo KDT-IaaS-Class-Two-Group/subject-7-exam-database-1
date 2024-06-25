@@ -110,17 +110,17 @@ const server = http.createServer((req, res) => {
         const id = data.id;
         const name = data.name;
 
-        // 데이터베이스에 연결하고 데이터 삽입
+        // 데이터베이스에 연결하고 id가 이미 존재하는지 확인
         const db = connectDB();
-        const query = 'INSERT INTO user (id, name, AccBalance) VALUES (?, ?, ?)';
+        const checkQuery = 'SELECT COUNT(*) AS count FROM user WHERE id = ?';
 
-        db.run(query, [id, name, 100000], (err) => {
+        db.get(checkQuery, [id], (err, row) => {
           if (err) {
-            console.error('데이터 삽입 중 오류 발생:', err);
+            console.error('데이터 조회 중 오류 발생:', err);
             res.writeHead(500, { 'Content-Type': 'text/plain; charset=UTF-8' });
             res.end('Internal Server Error');
-          } else {
-            // 데이터베이스에 성공적으로 저장되면 start.html 페이지를 응답
+          } else if (row.count > 0) {
+            // id가 이미 존재하는 경우 mainPage.html 페이지를 응답
             const filePath = path.join(__dirname, 'public', 'html', 'mainPage.html');
             fs.readFile(filePath, (err, data) => {
               if (err) {
@@ -130,6 +130,30 @@ const server = http.createServer((req, res) => {
               } else {
                 res.writeHead(200, { 'Content-Type': 'text/html; charset=UTF-8' });
                 res.end(data);
+              }
+            });
+          } else {
+            // id가 존재하지 않는 경우 데이터 삽입
+            const insertQuery = 'INSERT INTO user (id, name, AccBalance) VALUES (?, ?, ?)';
+
+            db.run(insertQuery, [id, name, 100000], (err) => {
+              if (err) {
+                console.error('데이터 삽입 중 오류 발생:', err);
+                res.writeHead(500, { 'Content-Type': 'text/plain; charset=UTF-8' });
+                res.end('Internal Server Error');
+              } else {
+                // 데이터베이스에 성공적으로 저장되면 mainPage.html 페이지를 응답
+                const filePath = path.join(__dirname, 'public', 'html', 'mainPage.html');
+                fs.readFile(filePath, (err, data) => {
+                  if (err) {
+                    console.error('파일 읽기 에러:', err);
+                    res.writeHead(500, { 'Content-Type': 'text/plain; charset=UTF-8' });
+                    res.end('Internal Server Error');
+                  } else {
+                    res.writeHead(200, { 'Content-Type': 'text/html; charset=UTF-8' });
+                    res.end(data);
+                  }
+                });
               }
             });
           }
