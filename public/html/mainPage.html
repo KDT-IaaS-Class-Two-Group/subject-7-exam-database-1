@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,6 +8,7 @@
   </head>
   <body>
     <div id="root">
+      <div id="Item-information"></div>
       <div id="Snappers_Img">
         <img src="../img/snappersIMG.png.png" alt="건방진 뚝딱이img" />
       </div>
@@ -66,9 +67,14 @@
         <div class="cart" id="cart-items">
           <!-- 장바구니 아이템들이 여기에 추가됩니다 -->
         </div>
-        <form action="/buy" method="post">
+        <div class="total">
+          <span>합계 :</span>
+          <span id="total-price">0원</span>
+        </div>
+        <div class="buttons">
+          <button id="purchase-history">구매내역</button>
           <button type="submit" class="submit-btn">결정</button>
-        </form>
+        </div>
       </div>
       <div id="receipt">
         <div>
