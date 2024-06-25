@@ -99,7 +99,7 @@ body {
   transform: translateY(2px);
 }
 
-/* 사이드바 */
+/* 장바구니 디자인 */
 .container {
   width: 20vw;
   height: 100vh;
@@ -142,19 +142,40 @@ body {
   text-align: right;
 }
 
+.total {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-top: 1px solid #ccc;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10px;
+}
+
 .submit-btn {
-  width: 100%;
+  width: 48%;
   padding: 10px;
   background-color: red;
   color: white;
   border: none;
   cursor: pointer;
-  margin-top: 10px;
+}
+
+#purchase-history {
+  width: 48%;
+  padding: 10px;
+  background-color: green;
+  color: white;
+  border: none;
+  cursor: pointer;
 }
 
 #receipt {
   position: absolute;
-  z-index: 3;
+  z-index: 4;
   box-sizing: border-box;
   padding: 10px;
   width: 280px;
@@ -196,11 +217,11 @@ body {
 
 #partition {
   position: absolute;
-  z-index: 2;
+  z-index: 3;
   background-color: rgba(27, 27, 27, 0.6);
   width: 100vw;
   height: 100vh;
-  visibility: visible;
+  visibility: hidden;
 }
 
 /* 뚝딱이 클릭  */
