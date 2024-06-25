@@ -33,3 +33,19 @@ body {
   padding: 10px 20px;
   border-radius: 10px;
 }
+
+.item-container {
+  width: 100%;
+  height: 260px;
+  background-color: rgba(0, 0, 0, 0.59); /* 배경색에 투명도를 추가 */
+  position: fixed;
+  bottom: -260px; /* 초기 위치: 화면 밖 아래쪽 */
+  left: 0;
+  transition: bottom 0.5s ease, opacity 0.5s ease; /* 애니메이션 효과 */
+  opacity: 0.2; /* 흐림도 설정 */
+}
+
+.item-container.active {
+  bottom: 0; /* 화면 내 위치 */
+  opacity: 1; /* 활성화될 때 선명하게 */
+}
