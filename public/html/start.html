@@ -9,14 +9,17 @@
   <body>
     <div id="root">
       <h1>어서오세요 뚝딱 상점</h1>
-
       <div id="link">
-        <a href="./mainPeage.html"><button id="start">게임 시작</button></a>
-
+        <form action="/start" method="post">
+          <label for="id">ID</label>
+          <input type="text" name="id" id="id" /><br /><br />
+          <label for="name">NAME</label>
+          <input type="text" name="name" id="name" /><br /><br />
+          <input type="submit" value="게임 시작" id="start" />
+        </form>
         <a href="exit.html"><button id="exit">게임 종료</button></a>
       </div>
       <script src="../script/start.js"></script>
     </div>
   </body>
 </html>
-xs
