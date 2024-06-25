@@ -1,3 +1,5 @@
+//* Item위에 마우스 오버시 이름과 설명나오는 부분
+
 document.addEventListener('DOMContentLoaded', () => {
   const items = document.querySelectorAll('.item');
   const itemInfo = document.getElementById('Item_Information');
@@ -18,6 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 });
+
+// * 가격 버튼 클릭시 장바구니에 카운트 되는 부분
 
 document.addEventListener('DOMContentLoaded', function () {
   // 클릭된 상품을 카운트할 객체
@@ -61,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
-// 마우스 오버 시 이미지 확대
+// * Item 이미지에 마우스 오버 시 이미지 확대
 document.querySelectorAll('.hover-zoom').forEach((item) => {
   item.addEventListener('mouseover', function () {
     this.style.transform = 'scale(1.15)'; // 이미지 크기 15% 확대
