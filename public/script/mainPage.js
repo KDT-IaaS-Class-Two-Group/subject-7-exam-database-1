@@ -1,24 +1,58 @@
 //* Item위에 마우스 오버시 이름과 설명나오는 부분
+// AJAX 요청을 통해 서버에서 데이터를 가져오는 함수
+function fetchDataFromServer() {
+  const url = '/searchItem';
 
-document.addEventListener('DOMContentLoaded', () => {
+  // AJAX 요청 설정
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', url, true);
+
+  // 요청 완료 후 처리할 콜백 함수
+  xhr.onload = function () {
+    if (xhr.status >= 200 && xhr.status < 300) {
+      // 요청이 성공적으로 완료된 경우
+      const data = JSON.parse(xhr.responseText); // JSON 형식으로 파싱
+      handleData(data); // 데이터 처리 함수 호출
+    } else {
+      // 요청이 실패한 경우
+      console.error('서버에서 데이터를 불러오지 못했습니다.');
+    }
+  };
+
+  // 네트워크 오류 처리
+  xhr.onerror = function () {
+    console.error('네트워크 오류로 인해 데이터를 불러오지 못했습니다.');
+  };
+
+  // 요청 보내기
+  xhr.send();
+}
+
+// 받아온 데이터를 처리하는 함수
+function handleData(data) {
+  // 받아온 데이터를 콘솔에 출력하거나 원하는 방식으로 활용할 수 있습니다.
+  console.log('받아온 데이터:', data);
+
+  // 제품명과 설명을 화면에 출력하기
   const items = document.querySelectorAll('.item');
-  const itemInfo = document.getElementById('Item_Information');
+  items.forEach((item) => {
+    item.addEventListener('mouseenter', function () {
+      const itemName = this.getAttribute('data-name');
+      const selectedItem = data.find((item) => item.name === itemName);
+      const itemInfoElement = document.getElementById('Item_Information');
 
-  fetch('./public/script/item.json')
-    .then((response) => response.json())
-    .then((data) => {
-      items.forEach((item) => {
-        item.addEventListener('mouseenter', () => {
-          const itemName = item.getAttribute('data-name');
-          const product = data.find((product) => product.name === itemName);
-          itemInfo.innerHTML = `제품명: ${product.name}<br>제품 설명: ${product.description}`;
-        });
-
-        item.addEventListener('mouseleave', () => {
-          itemInfo.innerHTML = '제품명: <br>제품 설명:';
-        });
-      });
+      if (selectedItem) {
+        itemInfoElement.innerHTML = `제품명: ${selectedItem.name}<br>제품 설명: ${selectedItem.explain}`;
+      } else {
+        itemInfoElement.innerHTML = '제품 정보를 찾을 수 없습니다.';
+      }
     });
+  });
+}
+
+// DOMContentLoaded 이벤트 발생 시 AJAX 요청 수행
+document.addEventListener('DOMContentLoaded', function () {
+  fetchDataFromServer(); // 페이지 로드 시 데이터 가져오기
 });
 
 // * 가격 버튼 클릭시 장바구니에 카운트 되는 부분
