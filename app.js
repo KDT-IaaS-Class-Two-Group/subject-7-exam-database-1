@@ -1,8 +1,21 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
+const sqlite3 = require('sqlite3').verbose();
 
 const PORT = process.env.PORT || 8080;
+const dbPath = path.join(__dirname, 'database', 'database.db');
+
+// 데이터베이스 연결 함수
+const connectDB = () => {
+  return new sqlite3.Database(dbPath, (err) => {
+    if (err) {
+      console.error('데이터베이스 연결 중 오류 발생:', err);
+    } else {
+      console.log('데이터베이스에 성공적으로 연결되었습니다.');
+    }
+  });
+};
 
 const server = http.createServer((req, res) => {
   if (req.method === 'GET') {
@@ -13,53 +26,75 @@ const server = http.createServer((req, res) => {
       return;
     }
 
-    let filePath;
-    let contentType = 'text/html; charset=UTF-8'; // 기본 값은 HTML로 설정
+    if (req.url === '/searchItem') {
+      // /searchItem 요청 처리
+      const db = connectDB();
+      const query = 'SELECT name, explain, price FROM product';
 
-    // 기본적으로 index.html을 제공하도록 설정
-    if (req.url === '/' || req.url === '/start.html') {
-      filePath = path.join(__dirname, 'public', 'html', 'start.html');
-    } else {
-      // 요청된 URL에 따라 파일 경로 설정
-      const ext = path.extname(req.url);
-
-      // 파일 경로 설정
-      if (ext === '.html') {
-        filePath = path.join(__dirname, 'public', 'html', path.basename(req.url));
-      } else if (ext === '.css') {
-        filePath = path.join(__dirname, 'public', 'css', path.basename(req.url));
-        contentType = 'text/css; charset=UTF-8';
-      } else if (ext === '.js') {
-        filePath = path.join(__dirname, 'public', 'script', path.basename(req.url));
-        contentType = 'application/javascript; charset=UTF-8';
-      } else if (ext === '.json') {
-        filePath = path.join(__dirname, 'public', 'script', path.basename(req.url));
-        contentType = 'application/json; charset=UTF-8';
-      } else if (ext === '.png') {
-        filePath = path.join(__dirname, 'public', 'img', path.basename(req.url));
-        contentType = 'img / png';
-      }
-    }
-
-    // 파일이 존재하는지 확인 후 응답
-    fs.readFile(filePath, (err, data) => {
-      if (err) {
-        if (err.code === 'ENOENT') {
-          // 파일이 없는 경우 404 에러
-          res.writeHead(404, { 'Content-Type': 'text/plain; charset=UTF-8' });
-          res.end('404 Not Found');
-        } else {
-          // 기타 에러 처리
-          console.error('파일 읽기 에러:', err);
+      db.all(query, [], (err, rows) => {
+        if (err) {
+          console.error('데이터 조회 중 오류 발생:', err);
           res.writeHead(500, { 'Content-Type': 'text/plain; charset=UTF-8' });
           res.end('Internal Server Error');
+        } else {
+          res.writeHead(200, { 'Content-Type': 'application/json; charset=UTF-8' });
+          res.end(JSON.stringify(rows));
         }
+        db.close((err) => {
+          if (err) {
+            console.error('데이터베이스 닫기 중 오류 발생:', err);
+          }
+        });
+      });
+    } else {
+      let filePath;
+      let contentType = 'text/html; charset=UTF-8'; // 기본 값은 HTML로 설정
+
+      // 기본적으로 index.html을 제공하도록 설정
+      if (req.url === '/' || req.url === '/start.html') {
+        filePath = path.join(__dirname, 'public', 'html', 'start.html');
       } else {
-        // 파일이 존재하는 경우 해당 파일을 응답
-        res.writeHead(200, { 'Content-Type': contentType });
-        res.end(data);
+        // 요청된 URL에 따라 파일 경로 설정
+        const ext = path.extname(req.url);
+
+        // 파일 경로 설정
+        if (ext === '.html') {
+          filePath = path.join(__dirname, 'public', 'html', path.basename(req.url));
+        } else if (ext === '.css') {
+          filePath = path.join(__dirname, 'public', 'css', path.basename(req.url));
+          contentType = 'text/css; charset=UTF-8';
+        } else if (ext === '.js') {
+          filePath = path.join(__dirname, 'public', 'script', path.basename(req.url));
+          contentType = 'application/javascript; charset=UTF-8';
+        } else if (ext === '.json') {
+          filePath = path.join(__dirname, 'public', 'script', path.basename(req.url));
+          contentType = 'application/json; charset=UTF-8';
+        } else if (ext === '.png') {
+          filePath = path.join(__dirname, 'public', 'img', path.basename(req.url));
+          contentType = 'image/png';
+        }
       }
-    });
+
+      // 파일이 존재하는지 확인 후 응답
+      fs.readFile(filePath, (err, data) => {
+        if (err) {
+          if (err.code === 'ENOENT') {
+            // 파일이 없는 경우 404 에러
+            res.writeHead(404, { 'Content-Type': 'text/plain; charset=UTF-8' });
+            res.end('404 Not Found');
+          } else {
+            // 기타 에러 처리
+            console.error('파일 읽기 에러:', err);
+            res.writeHead(500, { 'Content-Type': 'text/plain; charset=UTF-8' });
+            res.end('Internal Server Error');
+          }
+        } else {
+          // 파일이 존재하는 경우 해당 파일을 응답
+          res.writeHead(200, { 'Content-Type': contentType });
+          res.end(data);
+        }
+      });
+    }
   } else {
     // GET 요청이 아닌 경우 405 Method Not Allowed 응답
     res.writeHead(405, { 'Content-Type': 'text/plain; charset=UTF-8' });
