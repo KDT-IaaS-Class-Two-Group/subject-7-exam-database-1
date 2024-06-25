@@ -2,6 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const sqlite3 = require('sqlite3').verbose();
+const querystring = require('querystring'); // POST 데이터 파싱을 위한 모듈
 
 const PORT = process.env.PORT || 8080;
 const dbPath = path.join(__dirname, 'database', 'database.db');
@@ -94,6 +95,79 @@ const server = http.createServer((req, res) => {
           res.end(data);
         }
       });
+    }
+  } else if (req.method === 'POST') {
+    if (req.url === '/start') {
+      // POST 요청에서 form 데이터 수신
+      let body = '';
+
+      req.on('data', (chunk) => {
+        body += chunk.toString();
+      });
+
+      req.on('end', () => {
+        const data = querystring.parse(body);
+        const id = data.id;
+        const name = data.name;
+
+        // 데이터베이스에 연결하고 id가 이미 존재하는지 확인
+        const db = connectDB();
+        const checkQuery = 'SELECT COUNT(*) AS count FROM user WHERE id = ?';
+
+        db.get(checkQuery, [id], (err, row) => {
+          if (err) {
+            console.error('데이터 조회 중 오류 발생:', err);
+            res.writeHead(500, { 'Content-Type': 'text/plain; charset=UTF-8' });
+            res.end('Internal Server Error');
+          } else if (row.count > 0) {
+            // id가 이미 존재하는 경우 mainPage.html 페이지를 응답
+            const filePath = path.join(__dirname, 'public', 'html', 'mainPage.html');
+            fs.readFile(filePath, (err, data) => {
+              if (err) {
+                console.error('파일 읽기 에러:', err);
+                res.writeHead(500, { 'Content-Type': 'text/plain; charset=UTF-8' });
+                res.end('Internal Server Error');
+              } else {
+                res.writeHead(200, { 'Content-Type': 'text/html; charset=UTF-8' });
+                res.end(data);
+              }
+            });
+          } else {
+            // id가 존재하지 않는 경우 데이터 삽입
+            const insertQuery = 'INSERT INTO user (id, name, AccBalance) VALUES (?, ?, ?)';
+
+            db.run(insertQuery, [id, name, 100000], (err) => {
+              if (err) {
+                console.error('데이터 삽입 중 오류 발생:', err);
+                res.writeHead(500, { 'Content-Type': 'text/plain; charset=UTF-8' });
+                res.end('Internal Server Error');
+              } else {
+                // 데이터베이스에 성공적으로 저장되면 mainPage.html 페이지를 응답
+                const filePath = path.join(__dirname, 'public', 'html', 'mainPage.html');
+                fs.readFile(filePath, (err, data) => {
+                  if (err) {
+                    console.error('파일 읽기 에러:', err);
+                    res.writeHead(500, { 'Content-Type': 'text/plain; charset=UTF-8' });
+                    res.end('Internal Server Error');
+                  } else {
+                    res.writeHead(200, { 'Content-Type': 'text/html; charset=UTF-8' });
+                    res.end(data);
+                  }
+                });
+              }
+            });
+          }
+          db.close((err) => {
+            if (err) {
+              console.error('데이터베이스 닫기 중 오류 발생:', err);
+            }
+          });
+        });
+      });
+    } else {
+      // POST 요청이지만 /start가 아닌 경우 404 Not Found 응답
+      res.writeHead(404, { 'Content-Type': 'text/plain; charset=UTF-8' });
+      res.end('404 Not Found');
     }
   } else {
     // GET 요청이 아닌 경우 405 Method Not Allowed 응답

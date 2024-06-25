@@ -20,32 +20,31 @@ body {
   overflow: hidden;
 }
 
-/* 제품 정보 */
-#Item_Information {
-  width: 20%;
-  height: 150px;
-  background-color: darkgray;
-  opacity: 0.7;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 10px;
-  font-size: 20px;
-  position: absolute;
-  top: 100px;
-}
-
 /* 환영 텍스트 */
 #welcomeText {
-  width: 70%;
+  width: 80%;
   height: 100px;
-  background-color: cadetblue;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 30px;
   position: absolute;
-  bottom: 500px; /* 위치 조정 */
+  bottom: 100px; /* 위치 조정 */
+  position: relative; /* 이 줄 추가 */
+}
+
+#welcomeText img {
+  width: 800px; /* 이미지가 부모 컨테이너에 맞도록 설정 */
+  height: 250px; /* 가로세로 비율 유지 */
+}
+
+.Text {
+  z-index: 1;
+  font-size: 20px;
+  color: #f9f9f9;
+  position: absolute; /* 이 줄 추가 */
+  top: 50%; /* 수직 중앙 */
+  left: 50%; /* 수평 중앙 */
+  transform: translate(-50%, -50%); /* 중앙으로 오프셋 */
 }
 
 /* 아이템 목록 */
@@ -64,6 +63,7 @@ body {
   position: absolute;
   bottom: 0px; /* 이전 값: 0 */
   right: 20vw;
+  z-index: 2;
 }
 
 .item {
