@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 document.addEventListener('DOMContentLoaded', function () {
   // 클릭된 상품을 카운트할 객체
-  const cartCounts = {};
+  let cartCounts = {};
   let totalPrice = 0;
 
   // 모든 .price 버튼들을 가져와서 클릭 이벤트를 추가합니다
@@ -151,12 +151,12 @@ document.addEventListener('DOMContentLoaded', function () {
         receCon.innerHTML = '';
         let test = '';
         for (key in cartCounts) {
-          test += `<div>${key} ${cartCounts[key].count}개 ${cartCounts[key].price}원</div>`;
+          test += `<div>${key} ${cartCounts[key].count}개 ${cartCounts[key].price * cartCounts[key].count}원</div>`;
         }
         let totalmoney = document.createElement('div');
         let allmoney = Object.keys(cartCounts);
         let result = allmoney.reduce((sum, item) => {
-          return sum + cartCounts[item].price;
+          return sum + cartCounts[item].price * cartCounts[item].count;
         }, 0);
 
         totalmoney.textContent = `합계금액 : ${result}원`;
@@ -165,6 +165,10 @@ document.addEventListener('DOMContentLoaded', function () {
         receCon.appendChild(totalmoney);
         partition.style.visibility = 'visible';
         receipt.style.visibility = 'visible';
+        cartCounts = {};
+        totalPrice = 0;
+        document.getElementById('cart-items').innerHTML = '';
+        document.getElementById('total-price').textContent = `${totalPrice}원`;
       }
     });
   });
