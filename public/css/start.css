@@ -1,5 +1,6 @@
 body {
-  background: url('../img/start-2.png') no-repeat center center fixed;
+  background: url('https://img.freepik.com/premium-vector/video-game-jungle-forest-cave-game-background_597121-1214.jpg')
+    no-repeat center center fixed;
   background-size: cover;
   font-family: 'NeoDunggeunmo';
   display: flex;

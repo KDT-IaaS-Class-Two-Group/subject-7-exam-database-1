@@ -6,7 +6,8 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: url('../img/main-1.png') no-repeat center center fixed;
+  background: url('https://i.pinimg.com/originals/05/53/f2/0553f20e27fe47a8027e5f12c2b93002.jpg') no-repeat center
+    center fixed;
   background-size: cover;
 }
 
@@ -78,13 +79,13 @@ body {
   cursor: pointer;
 }
 
-.sell {
+.history {
   position: fixed;
   right: 0;
   top: 0;
   width: 400px;
   height: 100%;
-  background-color: blue;
+  background-color: rgba(0, 0, 0, 0.5);
   transform: translateX(100%);
   opacity: 0;
   transition: transform 0.3s ease, opacity 0.3s ease;
