@@ -42,9 +42,9 @@ function handleData(data) {
       const itemInfoElement = document.querySelector('#Item-information > div'); // id="Item-information" 안의 div 요소 선택
 
       if (selectedItem) {
-        itemInfoElement.innerHTML = `제품명: ${selectedItem.name}<br>${selectedItem.explain}`;
+        itemInfoElement.innerHTML = `<img src="../img/test-img1.png" alt="테스트 이미지"><br>제품명: ${selectedItem.name}<br>${selectedItem.explain}`;
       } else {
-        itemInfoElement.innerHTML = '제품 정보를 찾을 수 없습니다.';
+        itemInfoElement.innerHTML = `<img src="../img/test-img1.png" alt="테스트 이미지"><br>제품 정보를 찾을 수 없습니다.`;
       }
     });
 
