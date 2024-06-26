@@ -1,7 +1,7 @@
 //* Item위에 마우스 오버시 이름과 설명나오는 부분
 // AJAX 요청을 통해 서버에서 데이터를 가져오는 함수
 function fetchDataFromServer() {
-  const url = '/searchItem';
+  const url = '/searchItem'; // 서버에서 데이터를 가져올 경로
 
   // AJAX 요청 설정
   const xhr = new XMLHttpRequest();
@@ -34,15 +34,15 @@ function handleData(data) {
   console.log('받아온 데이터:', data);
 
   // 제품명과 설명을 화면에 출력하기
-  const items = document.querySelectorAll('.item');
+  const items = document.querySelectorAll('.item img'); // 각 item의 img 요소 선택
   items.forEach((item) => {
     item.addEventListener('mouseenter', function () {
-      const itemName = this.getAttribute('data-name');
+      const itemName = this.parentElement.getAttribute('data-name'); // 부모 요소에서 data-name 속성 가져오기
       const selectedItem = data.find((item) => item.name === itemName);
-      const itemInfoElement = document.getElementById('Item_Information');
+      const itemInfoElement = document.querySelector('#Item-information > div'); // id="Item-information" 안의 div 요소 선택
 
       if (selectedItem) {
-        itemInfoElement.innerHTML = `제품명: ${selectedItem.name}<br>제품 설명: ${selectedItem.explain}`;
+        itemInfoElement.innerHTML = `제품명: ${selectedItem.name}<br>${selectedItem.explain}`;
       } else {
         itemInfoElement.innerHTML = '제품 정보를 찾을 수 없습니다.';
       }
