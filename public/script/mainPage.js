@@ -98,11 +98,15 @@ document.addEventListener("DOMContentLoaded", function () {
         },0);
         
         totalmoney.textContent = `합계금액 : ${result}원`;
-
+  
         receCon.innerHTML = test;
         receCon.appendChild(totalmoney);
         partition.style.visibility = 'visible';
         receipt.style.visibility = 'visible';
+        cartCounts = {};
+        totalPrice = 0;
+        document.getElementById("cart-items").innerHTML = '';
+        document.getElementById("total-price").textContent = `${totalPrice}원`;
       }
     });
   });
