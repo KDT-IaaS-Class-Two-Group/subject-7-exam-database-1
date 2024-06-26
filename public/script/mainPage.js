@@ -1,4 +1,4 @@
-//* Item위에 마우스 오버시 이름과 설명나오는 부분
+// Item위에 마우스 오버시 이름과 설명나오는 부분
 // AJAX 요청을 통해 서버에서 데이터를 가져오는 함수
 function fetchDataFromServer() {
   const url = '/searchItem'; // 서버에서 데이터를 가져올 경로
@@ -46,6 +46,11 @@ function handleData(data) {
       } else {
         itemInfoElement.innerHTML = '제품 정보를 찾을 수 없습니다.';
       }
+    });
+
+    item.addEventListener('mouseleave', function () {
+      const itemInfoElement = document.querySelector('#Item-information > div'); // id="Item-information" 안의 div 요소 선택
+      itemInfoElement.innerHTML = ''; // 마우스를 내릴 때 정보를 비웁니다.
     });
   });
 }
