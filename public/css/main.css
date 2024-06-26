@@ -17,7 +17,7 @@ body {
   justify-content: center;
   align-items: center;
   width: 100%;
-  margin-top: 100px;
+  margin-top: 7%;
 }
 
 .image-container img {
@@ -25,12 +25,15 @@ body {
   height: auto;
 }
 
+.welcome-image {
+  width: 30%; /* 이미지 크기를 40%로 줄입니다 */
+  height: auto;
+}
+
 .text-overlay {
   position: absolute;
-  color: white;
-  font-size: 2em;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-  background-color: rgba(0, 0, 0, 0.3);
+  color: rgb(0, 0, 0);
+  font-size: 1.5em;
   padding: 10px 20px;
   border-radius: 10px;
 }
