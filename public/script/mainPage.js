@@ -1,4 +1,4 @@
-// Item위에 마우스 오버시 이름과 설명나오는 부분
+//* Item위에 마우스 오버시 이름과 설명나오는 부분
 // AJAX 요청을 통해 서버에서 데이터를 가져오는 함수
 function fetchDataFromServer() {
   const url = '/searchItem'; // 서버에서 데이터를 가져올 경로
@@ -39,7 +39,7 @@ function handleData(data) {
     item.addEventListener('mouseenter', function () {
       const itemName = this.parentElement.getAttribute('data-name'); // 부모 요소에서 data-name 속성 가져오기
       const selectedItem = data.find((item) => item.name === itemName);
-      const itemInfoElement = document.querySelector('#Item-information > div'); // id="Item-information" 안의 div 요소 선택
+      const itemInfoElement = document.querySelector('#Item-Text');
 
       if (selectedItem) {
         itemInfoElement.innerHTML = `제품명: ${selectedItem.name}<br>${selectedItem.explain}`;
@@ -49,7 +49,7 @@ function handleData(data) {
     });
 
     item.addEventListener('mouseleave', function () {
-      const itemInfoElement = document.querySelector('#Item-information > div'); // id="Item-information" 안의 div 요소 선택
+      const itemInfoElement = document.querySelector('#Item-Text');
       itemInfoElement.innerHTML = ''; // 마우스를 내릴 때 정보를 비웁니다.
     });
   });
@@ -58,6 +58,39 @@ function handleData(data) {
 // DOMContentLoaded 이벤트 발생 시 AJAX 요청 수행
 document.addEventListener('DOMContentLoaded', function () {
   fetchDataFromServer(); // 페이지 로드 시 데이터 가져오기
+});
+
+// * Item-imformaion 말풍선
+
+document.addEventListener('DOMContentLoaded', function () {
+  // 각 .item 요소 가져오기
+  const items = document.querySelectorAll('.item');
+
+  items.forEach((item) => {
+    const img = item.querySelector('img'); // 각 .item 안에 있는 img 요소 선택
+
+    img.addEventListener('mouseover', function () {
+      const bubbleImg = document.createElement('img');
+      bubbleImg.src = '../img/test-img1.png';
+      bubbleImg.alt = '말풍선 img';
+      bubbleImg.classList.add('bubble-img'); // 스타일링을 위한 클래스 추가
+
+      // 이미지를 body에 추가
+      document.body.appendChild(bubbleImg);
+
+      // 말풍선 이미지를 화면 중앙 상단으로 이동
+      bubbleImg.style.position = 'fixed';
+      bubbleImg.style.top = '20%';
+      bubbleImg.style.left = '30%';
+      bubbleImg.style.transform = 'translate(-50%, -50%)';
+      bubbleImg.style.width = '80vh';
+
+      // 마우스를 내리면 이미지 제거
+      img.addEventListener('mouseout', function () {
+        bubbleImg.remove();
+      });
+    });
+  });
 });
 
 // * 가격 버튼 클릭시 장바구니에 카운트 되는 부분
