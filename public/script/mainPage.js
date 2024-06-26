@@ -128,13 +128,12 @@ document.addEventListener('DOMContentLoaded', function () {
     window.location.href = 'gume.html';
   });
 
-  document.querySelector('form').addEventListener('submit', function (event) {
+  document.getElementById('decideBuy').addEventListener('click', function (event) {
     event.preventDefault();
     const orderData = {
       items: cartCounts,
       total: totalPrice,
     };
-
     fetch('/buy', {
       method: 'POST',
       headers: {
@@ -144,6 +143,26 @@ document.addEventListener('DOMContentLoaded', function () {
     }).then((response) => {
       if (response.ok) {
         alert('구매가 완료되었습니다.');
+        const receipt = document.getElementById('receipt');
+        const partition = document.getElementById('partition');
+        const receCon = document.getElementById('receiptContent');
+        receCon.innerHTML = '';
+        let test = '';
+        for (key in cartCounts) {
+          test += `<div>${key} ${cartCounts[key].count}개 ${cartCounts[key].price}원</div>`;
+        }
+        let totalmoney = document.createElement('div');
+        let allmoney = Object.keys(cartCounts);
+        let result = allmoney.reduce((sum, item) => {
+          return sum + cartCounts[item].price;
+        }, 0);
+
+        totalmoney.textContent = `합계금액 : ${result}원`;
+
+        receCon.innerHTML = test;
+        receCon.appendChild(totalmoney);
+        partition.style.visibility = 'visible';
+        receipt.style.visibility = 'visible';
       } else {
         alert('구매 중 오류가 발생했습니다.');
       }

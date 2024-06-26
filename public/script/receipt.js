@@ -39,6 +39,12 @@ const receipt = document.getElementById('receipt');
 
 const partition = document.getElementById('partition');
 
+const goExit = document.getElementById('goExit');
+
+goExit.addEventListener('click', ()=>{
+  window.open('/exit.html','_self');
+});
+
 returnMain.addEventListener('click', () => {
   receipt.style.visibility = 'hidden';
   partition.style.visibility = 'hidden';
