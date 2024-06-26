@@ -81,13 +81,15 @@ document.addEventListener("DOMContentLoaded", function () {
     }).then((response) => {
       if (response.ok) {
         alert("구매가 완료되었습니다.");
+      } else {
+        alert("구매 중 오류가 발생했습니다.");
         const receipt = document.getElementById('receipt');
         const partition = document.getElementById('partition');
         const receCon = document.getElementById('receiptContent');
         receCon.innerHTML = '';
         let test = '';
         for(key in cartCounts){
-          test += `<div>${key} ${cartCounts[key].count}개 ${cartCounts[key].price}원</div>`;
+          test += `<div>${key} ${cartCounts[key].count}개 ${cartCounts[key].price*cartCounts[key].count}원</div>`;
         }
         let totalmoney = document.createElement('div');
         let allmoney = Object.keys(cartCounts);
@@ -101,8 +103,6 @@ document.addEventListener("DOMContentLoaded", function () {
         receCon.appendChild(totalmoney);
         partition.style.visibility = 'visible';
         receipt.style.visibility = 'visible';
-      } else {
-        alert("구매 중 오류가 발생했습니다.");
       }
     });
   });
