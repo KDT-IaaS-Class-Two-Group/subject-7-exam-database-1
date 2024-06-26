@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   // 클릭된 상품을 카운트할 객체
-  const cartCounts = {};
+  let cartCounts = {};
   let totalPrice = 0;
 
   // 모든 .price 버튼들을 가져와서 클릭 이벤트를 추가합니다
@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let totalmoney = document.createElement('div');
         let allmoney = Object.keys(cartCounts);
         let result = allmoney.reduce((sum,item)=>{
-          return sum + cartCounts[item].price;
+          return sum + cartCounts[item].price*cartCounts[item].count;
         },0);
         
         totalmoney.textContent = `합계금액 : ${result}원`;
