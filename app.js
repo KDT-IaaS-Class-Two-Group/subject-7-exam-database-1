@@ -103,10 +103,12 @@ const server = http.createServer((req, res) => {
 
       req.on('data', (chunk) => {
         body += chunk.toString();
+        console.log(body);
       });
 
       req.on('end', () => {
         const data = querystring.parse(body);
+        console.log(data);
         const id = data.id;
         const name = data.name;
 
