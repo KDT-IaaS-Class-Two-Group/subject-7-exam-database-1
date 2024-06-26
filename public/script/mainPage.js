@@ -143,6 +143,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }).then((response) => {
       if (response.ok) {
         alert('구매가 완료되었습니다.');
+      } else {
+        alert('구매 중 오류가 발생했습니다.');
         const receipt = document.getElementById('receipt');
         const partition = document.getElementById('partition');
         const receCon = document.getElementById('receiptContent');
@@ -163,8 +165,6 @@ document.addEventListener('DOMContentLoaded', function () {
         receCon.appendChild(totalmoney);
         partition.style.visibility = 'visible';
         receipt.style.visibility = 'visible';
-      } else {
-        alert('구매 중 오류가 발생했습니다.');
       }
     });
   });
