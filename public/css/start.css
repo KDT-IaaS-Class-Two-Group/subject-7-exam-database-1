@@ -1,6 +1,5 @@
 body {
-  background: url('https://png.pngtree.com/background/20230410/original/pngtree-forest-tree-light-green-background-picture-image_2383577.jpg')
-    no-repeat center center fixed;
+  background: url(../img/start.png) no-repeat center center fixed;
   background-size: cover;
   font-family: 'NeoDunggeunmo';
   display: flex;
