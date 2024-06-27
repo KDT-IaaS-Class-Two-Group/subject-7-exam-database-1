@@ -36,6 +36,7 @@ body {
   font-size: 1.5em;
   padding: 10px 20px;
   border-radius: 10px;
+  width: 25%;
 }
 
 .item-container {
@@ -203,4 +204,8 @@ body {
 
 #receipt button:hover {
   background-color: #0056b3;
+}
+
+.text-overlay {
+  font-size: 15px;
 }
