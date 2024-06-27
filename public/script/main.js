@@ -56,8 +56,15 @@ document.addEventListener('DOMContentLoaded', () => {
   // 결정 버튼 클릭 시 receipt 영역 보이기
   decideBuyBtn.addEventListener('click', () => {
     receipt.style.display = 'block';
+    positionReceiptAboveSnappers(); // receipt를 snappersImage 위에 위치시키는 함수 호출
   });
 
-  // 초기에 receipt 영역 숨기기
+  // receipt 초기에 숨기기
   receipt.style.display = 'none';
+
+  // receipt를 snappersImage 위에 위치시키는 함수
+  function positionReceiptAboveSnappers() {
+    const snappersImageRect = snappersImage.getBoundingClientRect();
+    receipt.style.position = 'absolute';
+  }
 });
