@@ -4,6 +4,7 @@ const path = require('path');
 const sqlite3 = require('sqlite3').verbose();
 const querystring = require('querystring'); // POST 데이터 파싱을 위한 모듈
 const popExt = require('./module/server/module_server_ext');
+const { handleErrorResponse, handleFileReadError } = require('./module/server/module_server_error');
 
 const PORT = process.env.PORT || 8080;
 const dbPath = path.join(__dirname, 'database', 'database.db');
@@ -36,8 +37,7 @@ const server = http.createServer((req, res) => {
       db.all(query, [], (err, rows) => {
         if (err) {
           console.error('데이터 조회 중 오류 발생:', err);
-          res.writeHead(500, { 'Content-Type': 'text/plain; charset=UTF-8' });
-          res.end('Internal Server Error');
+          handleErrorResponse(res,500,'Internal Server Error');
         } else {
           res.writeHead(200, { 'Content-Type': 'application/json; charset=UTF-8' });
           res.end(JSON.stringify(rows));
@@ -65,16 +65,8 @@ const server = http.createServer((req, res) => {
       // 파일이 존재하는지 확인 후 응답
       fs.readFile(filePath, (err, data) => {
         if (err) {
-          if (err.code === 'ENOENT') {
-            // 파일이 없는 경우 404 에러
-            res.writeHead(404, { 'Content-Type': 'text/plain; charset=UTF-8' });
-            res.end('404 Not Found');
-          } else {
-            // 기타 에러 처리
-            console.error('파일 읽기 에러:', err);
-            res.writeHead(500, { 'Content-Type': 'text/plain; charset=UTF-8' });
-            res.end('Internal Server Error');
-          }
+          handleFileReadError(res,err);
+          return;
         } else {
           // 파일이 존재하는 경우 해당 파일을 응답
           res.writeHead(200, { 'Content-Type': contentType });
@@ -105,16 +97,14 @@ const server = http.createServer((req, res) => {
         db.get(checkQuery, [id], (err, row) => {
           if (err) {
             console.error('데이터 조회 중 오류 발생:', err);
-            res.writeHead(500, { 'Content-Type': 'text/plain; charset=UTF-8' });
-            res.end('Internal Server Error');
+            handleErrorResponse(res,500,'Internal Serve Error');
           } else if (row.count > 0) {
             // id가 이미 존재하는 경우 mainPage.html 페이지를 응답
             const filePath = path.join(__dirname, 'public', 'html', 'mainPage.html');
             fs.readFile(filePath, (err, data) => {
               if (err) {
                 console.error('파일 읽기 에러:', err);
-                res.writeHead(500, { 'Content-Type': 'text/plain; charset=UTF-8' });
-                res.end('Internal Server Error');
+                handleErrorResponse(res,500,'Internal Server Error');
               } else {
                 res.writeHead(200, { 'Content-Type': 'text/html; charset=UTF-8' });
                 res.end(data);
@@ -127,16 +117,14 @@ const server = http.createServer((req, res) => {
             db.run(insertQuery, [id, name, 100000], (err) => {
               if (err) {
                 console.error('데이터 삽입 중 오류 발생:', err);
-                res.writeHead(500, { 'Content-Type': 'text/plain; charset=UTF-8' });
-                res.end('Internal Server Error');
+                handleErrorResponse(res,500,'Internal Server Error');
               } else {
                 // 데이터베이스에 성공적으로 저장되면 mainPage.html 페이지를 응답
                 const filePath = path.join(__dirname, 'public', 'html', 'mainPage.html');
                 fs.readFile(filePath, (err, data) => {
                   if (err) {
                     console.error('파일 읽기 에러:', err);
-                    res.writeHead(500, { 'Content-Type': 'text/plain; charset=UTF-8' });
-                    res.end('Internal Server Error');
+                    handleErrorResponse(res,500,'Internal Server Error');
                   } else {
                     res.writeHead(200, { 'Content-Type': 'text/html; charset=UTF-8' });
                     res.end(data);
@@ -154,13 +142,11 @@ const server = http.createServer((req, res) => {
       });
     } else {
       // POST 요청이지만 /start가 아닌 경우 404 Not Found 응답
-      res.writeHead(404, { 'Content-Type': 'text/plain; charset=UTF-8' });
-      res.end('404 Not Found');
+      handleErrorResponse(res,404,'404 Not Found');
     }
   } else {
     // GET 요청이 아닌 경우 405 Method Not Allowed 응답
-    res.writeHead(405, { 'Content-Type': 'text/plain; charset=UTF-8' });
-    res.end('405 Method Not Allowed');
+    handleErrorResponse(res,405,'405 Method Not Allowed');
   }
 });
 
