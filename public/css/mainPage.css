@@ -61,9 +61,10 @@ body {
   border-radius: 10px;
   background: linear-gradient(45deg, #8b4513, #a0522d);
   position: absolute;
-  bottom: 0px; /* 이전 값: 0 */
+  bottom: 0;
   right: 20vw;
   z-index: 2;
+  transition: transform 1s, bottom 1s; /* Transition 추가 */
 }
 
 .item {
@@ -105,12 +106,14 @@ body {
   height: 100vh;
   background-color: #f9f9f9;
   position: absolute;
-  right: 0;
+  right: 0; /* 초기 위치를 화면 오른쪽에 설정 */
   top: 0;
   display: flex;
   flex-direction: column;
   padding: 10px;
   border-left: 2px solid #ccc;
+  transform: translateX(100%); /* 초기에는 화면 오른쪽 밖으로 이동 */
+  transition: transform 1s; /* transform 속성에 대한 transition 추가 */
 }
 
 .money {
