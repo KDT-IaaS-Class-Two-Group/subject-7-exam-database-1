@@ -66,9 +66,14 @@ document.addEventListener("DOMContentLoaded", () => {
     receipt.style.display = "none";
   });
 
+  const goExit = document.getElementById('goExit');
+
+  goExit.addEventListener('click', ()=>{
+  window.open('/exit.html','_self');
+});
+
   // receipt를 snappersImage 위에 위치시키는 함수
   function positionReceiptAboveSnappers() {
-    const snappersImageRect = snappersImage.getBoundingClientRect();
     receipt.style.position = "absolute";
     // 예시로 위치를 조정하는 코드 추가 가능
   }
