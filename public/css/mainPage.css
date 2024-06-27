@@ -190,7 +190,7 @@ body {
   justify-content: space-between;
   background-color: white;
   color: black;
-  visibility: visible;
+  visibility: hidden;
 }
 
 #receipt > div:nth-child(1) {
