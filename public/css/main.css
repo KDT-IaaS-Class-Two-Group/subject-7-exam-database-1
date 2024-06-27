@@ -28,7 +28,7 @@ body {
 .spanppers {
   max-width: 100%;
   height: auto;
-  background-color: white;
+  /* background-color: white; */
   position: absolute;
   width: 500px;
   height: 270px;
