@@ -9,50 +9,90 @@
   <body>
     <div class="image-container" role="img" aria-label="어서오세요. 환영합니다.">
       <img src="../img/text.png" alt="Welcome Image" class="welcome-image" />
-      <div class="text-overlay">골라보던가~ 뚝딱!</div>
+      <div class="text-overlay">나를 눌러봐~ 뚝딱!</div>
     </div>
     <div class="image-container">
       <img src="../img/snappersIMG.png" alt="Snappers Image" class="snappers-image" />
     </div>
     <div class="item-container">
       <div class="item">
+        <div>어디로든 랜덤 문</div>
         <img src="../img/door.png" alt="Item 1" />
-        <button onclick="alert('Button 1 clicked!')">Button 1</button>
+        <button onclick="alert('Button 1 clicked!')">5,000원</button>
       </div>
       <div class="item">
+        <div>정체불명의 알</div>
         <img src="../img/Egg.png" alt="Item 2" />
-        <button onclick="alert('Button 2 clicked!')">Button 2</button>
+        <button onclick="alert('Button 2 clicked!')">8,000원</button>
       </div>
       <div class="item">
+        <div>수명</div>
+        <img src="../img/life.png" alt="Item 3" />
+        <button onclick="alert('Button 3 clicked!')">10,000원</button>
+      </div>
+      <div class="item">
+        <div>요술 망치</div>
         <img src="../img/ham.png" alt="Item 4" />
-        <button onclick="alert('Button 4 clicked!')">Button 4</button>
+        <button onclick="alert('Button 4 clicked!')">9,900원</button>
       </div>
       <div class="item">
+        <div>이상한 종이</div>
         <img src="../img/paper.png" alt="Item 5" />
-        <button onclick="alert('Button 5 clicked!')">Button 5</button>
+        <button onclick="alert('Button 5 clicked!')">1,000원</button>
       </div>
       <div class="item">
+        <div>GPT 식탁</div>
         <img src="../img/picnick.png" alt="Item 6" />
-        <button onclick="alert('Button 6 clicked!')">Button 6</button>
+        <button onclick="alert('Button 6 clicked!')">10,000원</button>
       </div>
       <div class="item">
+        <div>푹잠 물약</div>
         <img src="../img/Sleep_Potion.png" alt="Item 7" />
-        <button onclick="alert('Button 7 clicked!')">Button 7</button>
+        <button onclick="alert('Button 7 clicked!')">5,000원</button>
       </div>
       <div class="item">
+        <div>신비의 돌</div>
         <img src="../img/stone.png" alt="Item 8" />
-        <button onclick="alert('Button 8 clicked!')">Button 8</button>
+        <button onclick="alert('Button 8 clicked!')">7,000원</button>
       </div>
       <div class="item">
+        <div>기억의 알약</div>
         <img src="../img/pill.png" alt="Item 9" />
-        <button onclick="alert('Button 9 clicked!')">Button 9</button>
+        <button onclick="alert('Button 9 clicked!')">2,500원</button>
       </div>
       <div class="item">
+        <div>멀미 물약</div>
         <img src="../img/sickness_potion.png" alt="Item 10" />
-        <button onclick="alert('Button 10 clicked!')">Button 10</button>
+        <button onclick="alert('Button 10 clicked!')">5,000원</button>
       </div>
     </div>
-    <div class="history"></div>
+    <div class="history">
+      <div class="money">
+        <span>소지금 :</span>
+        <span id="nowmoney">100,000,00원</span>
+      </div>
+      <div class="cart" id="cart-items">
+        <!-- 장바구니 아이템들이 여기에 추가됩니다 -->
+      </div>
+      <div class="total">
+        <span>합계 :</span>
+        <span id="total-price">0원</span>
+      </div>
+      <div class="buttons">
+        <button id="purchase-history">구매내역</button>
+        <button id="decideBuy" type="submit" class="submit-btn">결정</button>
+      </div>
+    </div>
+    <div id="receipt">
+      <div>
+        <h3>영수증</h3>
+      </div>
+      <div id="receiptContent"></div>
+      <div>
+        <button id="returnMain">더 구매할래</button>
+        <button id="goExit">상점 나가기</button>
+      </div>
+    </div>
     <script src="../script/main.js"></script>
   </body>
 </html>
