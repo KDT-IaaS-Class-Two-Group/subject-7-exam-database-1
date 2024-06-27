@@ -153,3 +153,54 @@ body {
 .buttons button:hover {
   background-color: #0056b3;
 }
+#receipt {
+  width: 20%;
+  background-color: white;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  display: none; /* 초기에는 숨김 */
+}
+
+#receipt h3 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+#receiptContent {
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+}
+
+#receiptContent p {
+  margin: 5px 0;
+}
+
+#receiptContent p:last-child {
+  margin-bottom: 0;
+}
+
+#receipt button {
+  padding: 8px 16px;
+  font-size: 14px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-right: 10px;
+}
+
+#receipt button:last-child {
+  margin-right: 0;
+}
+
+#receipt button:hover {
+  background-color: #0056b3;
+}
