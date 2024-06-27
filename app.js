@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const sqlite3 = require('sqlite3').verbose();
 const querystring = require('querystring'); // POST 데이터 파싱을 위한 모듈
+const popExt = require('./module/server/module_server_ext');
 
 const PORT = process.env.PORT || 8080;
 const dbPath = path.join(__dirname, 'database', 'database.db');
@@ -57,23 +58,8 @@ const server = http.createServer((req, res) => {
       } else {
         // 요청된 URL에 따라 파일 경로 설정
         const ext = path.extname(req.url);
-
-        // 파일 경로 설정
-        if (ext === '.html') {
-          filePath = path.join(__dirname, 'public', 'html', path.basename(req.url));
-        } else if (ext === '.css') {
-          filePath = path.join(__dirname, 'public', 'css', path.basename(req.url));
-          contentType = 'text/css; charset=UTF-8';
-        } else if (ext === '.js') {
-          filePath = path.join(__dirname, 'public', 'script', path.basename(req.url));
-          contentType = 'application/javascript; charset=UTF-8';
-        } else if (ext === '.json') {
-          filePath = path.join(__dirname, 'public', 'script', path.basename(req.url));
-          contentType = 'application/json; charset=UTF-8';
-        } else if (ext === '.png') {
-          filePath = path.join(__dirname, 'public', 'img', path.basename(req.url));
-          contentType = 'image/png';
-        }
+        filePath = popExt(ext,req.url).fp;
+        contentType = popExt(ext,req.url).ct;
       }
 
       // 파일이 존재하는지 확인 후 응답
