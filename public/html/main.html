@@ -9,7 +9,7 @@
   <body>
     <div class="image-container" role="img" aria-label="어서오세요. 환영합니다.">
       <img src="../img/text.png" alt="Welcome Image" class="welcome-image" />
-      <div class="text-overlay">골라보던가~ 뚝딱!</div>
+      <div class="text-overlay">나를 눌러봐~ 뚝딱!</div>
     </div>
     <div class="image-container">
       <img src="../img/snappersIMG.png" alt="Snappers Image" class="snappers-image" />
@@ -66,7 +66,23 @@
         <button onclick="alert('Button 10 clicked!')">5,000원</button>
       </div>
     </div>
-    <div class="history"></div>
+    <div class="history">
+      <div class="money">
+        <span>소지금 :</span>
+        <span id="nowmoney">100,000,00원</span>
+      </div>
+      <div class="cart" id="cart-items">
+        <!-- 장바구니 아이템들이 여기에 추가됩니다 -->
+      </div>
+      <div class="total">
+        <span>합계 :</span>
+        <span id="total-price">0원</span>
+      </div>
+      <div class="buttons">
+        <button id="purchase-history">구매내역</button>
+        <button id="decideBuy" type="submit" class="submit-btn">결정</button>
+      </div>
+    </div>
     <script src="../script/main.js"></script>
   </body>
 </html>
