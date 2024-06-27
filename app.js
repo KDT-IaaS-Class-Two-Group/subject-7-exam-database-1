@@ -100,7 +100,7 @@ const server = http.createServer((req, res) => {
             handleErrorResponse(res,500,'Internal Serve Error');
           } else if (row.count > 0) {
             // id가 이미 존재하는 경우 mainPage.html 페이지를 응답
-            const filePath = path.join(__dirname, 'public', 'html', 'mainPage.html');
+            const filePath = path.join(__dirname, 'public', 'html', 'main.html');
             fs.readFile(filePath, (err, data) => {
               if (err) {
                 console.error('파일 읽기 에러:', err);
@@ -120,7 +120,7 @@ const server = http.createServer((req, res) => {
                 handleErrorResponse(res,500,'Internal Server Error');
               } else {
                 // 데이터베이스에 성공적으로 저장되면 mainPage.html 페이지를 응답
-                const filePath = path.join(__dirname, 'public', 'html', 'mainPage.html');
+                const filePath = path.join(__dirname, 'public', 'html', 'main.html');
                 fs.readFile(filePath, (err, data) => {
                   if (err) {
                     console.error('파일 읽기 에러:', err);
