@@ -1,6 +1,7 @@
 body {
-  background: url(../img/exit.png);
-  font-family: 'Arial', sans-serif;
+  background: url(../img/exit.png) no-repeat;
+  background-size: cover;
+  font-family: 'NeoDunggeunmo';
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,17 +13,10 @@ body {
   text-align: center;
   padding: 20px;
   border: 2px solid #8b4513;
-  background-color: #fff8dc;
+  background-color: rgba(255, 248, 220, 0.7); /* 투명 배경 */
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  font-family: 'NeoDunggeunmo';
-}
-
-h1 {
-  color: #8b4513;
-  margin-bottom: 20px;
-  font-size: 24px;
-  font-weight: bold;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  margin: 0px 20px;
 }
 
 #link {
