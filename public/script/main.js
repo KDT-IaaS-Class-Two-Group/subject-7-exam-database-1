@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const textOverlay = document.querySelector('.text-overlay');
   const itemImages = document.querySelectorAll('.item-container img');
   const decideBuyBtn = document.getElementById('decideBuy');
+  const returnMainBtn = document.getElementById('returnMain'); // 추가된 부분
   const receipt = document.getElementById('receipt');
 
   snappersImage.addEventListener('click', () => {
@@ -59,12 +60,15 @@ document.addEventListener('DOMContentLoaded', () => {
     positionReceiptAboveSnappers(); // receipt를 snappersImage 위에 위치시키는 함수 호출
   });
 
-  // receipt 초기에 숨기기
-  receipt.style.display = 'none';
+  // returnMain 버튼 클릭 시 receipt 영역 숨기기
+  returnMainBtn.addEventListener('click', () => {
+    receipt.style.display = 'none';
+  });
 
   // receipt를 snappersImage 위에 위치시키는 함수
   function positionReceiptAboveSnappers() {
     const snappersImageRect = snappersImage.getBoundingClientRect();
     receipt.style.position = 'absolute';
+    // 예시로 위치를 조정하는 코드 추가 가능
   }
 });
