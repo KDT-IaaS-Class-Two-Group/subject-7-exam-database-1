@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const welcomeImage = document.querySelector('.welcome-image');
   const textOverlay = document.querySelector('.text-overlay');
   const itemImages = document.querySelectorAll('.item-container img');
+  const decideBuyBtn = document.getElementById('decideBuy');
+  const receipt = document.getElementById('receipt');
 
   snappersImage.addEventListener('click', () => {
     itemContainer.classList.toggle('active');
@@ -50,4 +52,12 @@ document.addEventListener('DOMContentLoaded', () => {
       textOverlay.style.visibility = 'hidden';
     });
   });
+
+  // 결정 버튼 클릭 시 receipt 영역 보이기
+  decideBuyBtn.addEventListener('click', () => {
+    receipt.style.display = 'block';
+  });
+
+  // 초기에 receipt 영역 숨기기
+  receipt.style.display = 'none';
 });
