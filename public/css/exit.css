@@ -1,5 +1,7 @@
 body {
-  background: url(../img/exit.png);
+  background: url('https://png.pngtree.com/background/20230410/original/pngtree-forest-tree-green-light-background-picture-image_2383556.jpg')
+    no-repeat;
+  background-size: cover;
   font-family: 'Arial', sans-serif;
   display: flex;
   justify-content: center;
