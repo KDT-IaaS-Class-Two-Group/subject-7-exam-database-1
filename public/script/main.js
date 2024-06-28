@@ -3,7 +3,6 @@ const name = localStorage.getItem("name");
 
 document.addEventListener("DOMContentLoaded", () => {
   // 기존 코드 유지
-  const snappersImage = document.querySelector(".snappers-image");
   const clickDiv = document.querySelector(".spanppers");
   const itemContainer = document.querySelector(".item-container");
   const historyContainer = document.querySelector(".history");
@@ -11,7 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const textOverlay = document.querySelector(".text-overlay");
   const itemImages = document.querySelectorAll(".item-container img");
   const decideBuyBtn = document.getElementById("decideBuy");
-  const returnMainBtn = document.getElementById("returnMain"); // 추가된 부분
   const receipt = document.getElementById("receipt");
   const purchaseHis = document.getElementById('purchase-history');
 
@@ -60,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
       receipt.innerHTML = '';
     });
     btn1.textContent = '더 구매할래';
-    
+
     thirdDiv.appendChild(btn1);
     
     receipt.appendChild(firstDiv);
@@ -303,33 +301,60 @@ document.addEventListener("DOMContentLoaded", function () {
         body: JSON.stringify(orderData),
       }).then((response) => {
         if (response.ok) {
+          const decide = document.getElementById('decideBuy');
+          const receipt = document.getElementById('receipt');
           alert("구매가 완료되었습니다.");
-          // const receipt = document.getElementById("receipt");
-          // const receCon = document.getElementById("receiptContent");
-          // receCon.innerHTML = "";
-          // let test = "";
-          // for (key in cartCounts) {
-          //   test += `<div>${cartCounts[key].Pname} ${cartCounts[key].count}개 ${
-          //     cartCounts[key].price * cartCounts[key].count
-          //   }원</div>`;
-          // }
-          // let totalmoney = document.createElement("div");
-          // let allmoney = Object.keys(cartCounts);
-          // let result = allmoney.reduce((sum, item) => {
-          //   return sum + cartCounts[item].price * cartCounts[item].count;
-          // }, 0);
+            let firstDiv = document.createElement('div');
+            let tagH3 = document.createElement('h3');
+            let secondDiv = document.createElement('div');
+            let thirdDiv = document.createElement('div');
+            let btn1 = document.createElement('button');
+            let btn2 = document.createElement('button');
+        
+            tagH3.textContent = '영수증';
+        
+            firstDiv.appendChild(tagH3);
+        
+            btn1.setAttribute('id','returnMain')
+            btn1.addEventListener('click',()=>{
+              receipt.style.display = 'none';
+              receipt.innerHTML = '';
+            });
+            btn1.textContent = '더 구매할래';
+        
+            let innerCon = orderData.ccount
+            let content = "";
+            for (key in innerCon) {
+              content += `<div>${innerCon[key].Pname} ${innerCon[key].count}개 ${
+                innerCon[key].price * innerCon[key].count
+              }원</div>`;
+            }
+            let totalmoney = document.createElement("div");
+            let allmoney = Object.keys(innerCon);
+            let result = allmoney.reduce((sum, item) => {
+              return sum + innerCon[item].price * innerCon[item].count;
+            }, 0);
 
-          // totalmoney.textContent = `합계금액 : ${result}원`;
+            totalmoney.textContent = `합계금액 : ${result}원`;
 
-          // receCon.innerHTML = test;
-          // receCon.appendChild(totalmoney);
-          // receipt.style.visibility = "visible";
-          // cartCounts = {};
-          // totalPrice = 0;
-          // document.getElementById("cart-items").innerHTML = "";
-          // document.getElementById(
-          //   "total-price"
-          // ).textContent = `${totalPrice}원`;
+            secondDiv.innerHTML = content;
+            secondDiv.appendChild(totalmoney);
+
+            btn2.setAttribute('id','goExit');
+            btn2.addEventListener('click',()=>{
+              window.open('/exit.html','_self');
+            });
+            btn2.textContent = '상점나가기';
+            
+            thirdDiv.appendChild(btn1);
+            thirdDiv.appendChild(btn2);
+            
+            receipt.appendChild(firstDiv);
+            receipt.appendChild(secondDiv);
+            receipt.appendChild(thirdDiv);
+        
+            receipt.style.display = 'block';
+            receipt.style.position = 'absolute';
         } else {
           alert("구매 중 오류가 발생했습니다.");
         }
