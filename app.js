@@ -25,6 +25,8 @@ const connectDB = () => {
 };
 
 const server = http.createServer((req, res) => {
+  console.log(req.method);
+  console.log(req.url);
   if (req.method === "GET") {
     // favicon.ico 요청 무시
     if (req.url === "/favicon.ico") {
@@ -205,6 +207,35 @@ const server = http.createServer((req, res) => {
 
         res.writeHead(200, { "Content-Type": "application/json" });
         res.end(JSON.stringify({ success: true }));
+      });
+    } else if (req.url === '/readHistory') {
+      let body = '';
+
+      req.on('data', (chunk) => {
+        body += chunk.toString();
+      });
+
+      req.on('end', () => {
+        const parsedData = JSON.parse(body);
+        const id = parsedData.id;
+
+        const db = connectDB();
+        const selectQuery = 'SELECT Pname, Pprice, Quantity FROM OrderHistory WHERE id = ?';
+
+        db.all(selectQuery, [id], (err, rows) => {
+          if (err) {
+            console.error("데이터 조회 중 오류 발생:", err);
+            handleErrorResponse(res, 500, "Internal Server Error");
+          } else {
+            res.writeHead(200, { "Content-Type": "application/json; charset=UTF-8" });
+            res.end(JSON.stringify(rows));
+          }
+          db.close((err) => {
+            if (err) {
+              console.error("데이터베이스 닫기 중 오류 발생:", err);
+            }
+          });
+        });
       });
     } else {
       // POST 요청이지만 /start가 아닌 경우 404 Not Found 응답
