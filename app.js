@@ -98,57 +98,79 @@ const server = http.createServer((req, res) => {
 
         // 데이터베이스에 연결하고 id가 이미 존재하는지 확인
         const db = connectDB();
-        const checkQuery = "SELECT COUNT(*) AS count FROM user WHERE id = ?";
+        const checkQuery =
+          "SELECT COUNT(*) AS count, AccBalance FROM user WHERE id = ?";
 
         db.get(checkQuery, [id], (err, row) => {
           if (err) {
             console.error("데이터 조회 중 오류 발생:", err);
             handleErrorResponse(res, 500, "Internal Serve Error");
           } else if (row.count > 0) {
-            // id가 이미 존재하는 경우 mainPage.html 페이지를 응답
+            // id가 이미 존재하는 경우 startbalance에 AccBalance 값을 저장하고 main.html 페이지를 응답
+            const startbalance = row.AccBalance;
             const filePath = path.join(
               __dirname,
               "public",
               "html",
               "main.html"
             );
-            fs.readFile(filePath, (err, data) => {
+            fs.readFile(filePath, "utf8", (err, data) => {
               if (err) {
                 console.error("파일 읽기 에러:", err);
                 handleErrorResponse(res, 500, "Internal Server Error");
               } else {
+                const modifiedData = data.replace(
+                  '<span id="nowmoney"></span>',
+                  `<span id="nowmoney">${startbalance}원</span>`
+                );
                 res.writeHead(200, {
                   "Content-Type": "text/html; charset=UTF-8",
                 });
-                res.end(data);
+                res.end(modifiedData);
               }
             });
           } else {
             // id가 존재하지 않는 경우 데이터 삽입
             const insertQuery =
-              "INSERT INTO user (id, name, AccBalance) VALUES (?, ?, ?)";
+              "INSERT INTO user (id, name, AccBalance) VALUES (?, ?, 100000)";
 
-            db.run(insertQuery, [id, name, 100000], (err) => {
+            db.run(insertQuery, [id, name], (err) => {
               if (err) {
                 console.error("데이터 삽입 중 오류 발생:", err);
                 handleErrorResponse(res, 500, "Internal Server Error");
               } else {
-                // 데이터베이스에 성공적으로 저장되면 mainPage.html 페이지를 응답
-                const filePath = path.join(
-                  __dirname,
-                  "public",
-                  "html",
-                  "main.html"
-                );
-                fs.readFile(filePath, (err, data) => {
+                const newCheckQuery =
+                  "SELECT AccBalance FROM user WHERE id = ?";
+
+                db.get(newCheckQuery, [id], (err, newRow) => {
                   if (err) {
-                    console.error("파일 읽기 에러:", err);
+                    console.error("데이터 조회 중 오류 발생:", err);
                     handleErrorResponse(res, 500, "Internal Server Error");
                   } else {
-                    res.writeHead(200, {
-                      "Content-Type": "text/html; charset=UTF-8",
+                    const startbalance = newRow.AccBalance;
+                    // 데이터베이스에 성공적으로 저장되면 mainPage.html 페이지를 응답
+                    const filePath = path.join(
+                      __dirname,
+                      "public",
+                      "html",
+                      "main.html"
+                    );
+
+                    fs.readFile(filePath, "utf8", (err, data) => {
+                      if (err) {
+                        console.error("파일 읽기 에러:", err);
+                        handleErrorResponse(res, 500, "Internal Server Error");
+                      } else {
+                        const modifiedData = data.replace(
+                          '<span id="nowmoney"></span>',
+                          `<span id="nowmoney">${startbalance}원</span>`
+                        );
+                        res.writeHead(200, {
+                          "Content-Type": "text/html; charset=UTF-8",
+                        });
+                        res.end(modifiedData);
+                      }
                     });
-                    res.end(data);
                   }
                 });
               }

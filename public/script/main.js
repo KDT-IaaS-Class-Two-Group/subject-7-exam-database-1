@@ -240,12 +240,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   document
-    .getElementById("purchase-history")
-    .addEventListener("click", function () {
-      window.location.href = "gume.html";
-    });
-
-  document
     .getElementById("decideBuy")
     .addEventListener("click", function (event) {
       event.preventDefault();
