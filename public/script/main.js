@@ -263,9 +263,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }).then((response) => {
         if (response.ok) {
           alert("구매가 완료되었습니다.");
-        } else {
-          console.log(cartCounts);
-          alert("구매 중 오류가 발생했습니다.");
           const receipt = document.getElementById("receipt");
           const receCon = document.getElementById("receiptContent");
           receCon.innerHTML = "";
@@ -292,6 +289,8 @@ document.addEventListener("DOMContentLoaded", function () {
           document.getElementById(
             "total-price"
           ).textContent = `${totalPrice}원`;
+        } else {
+          alert("구매 중 오류가 발생했습니다.");
         }
       });
     });
