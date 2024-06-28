@@ -39,7 +39,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     firstDiv.appendChild(tagH3);
 
-    secondDiv.textContent = '';
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST','/readHistory');
+    xhr.send(JSON.stringify({id : id}));
+    xhr.addEventListener('load',()=>{
+      let result = JSON.parse(xhr.responseText);
+      console.log(result);
+
+      result.forEach((item)=>{
+        let pTag = document.createElement('p');
+        pTag.textContent = `${item.Pname} ${item.Pprice}원 ${item.Quantity}개`
+        secondDiv.appendChild(pTag);
+      });
+    });
 
     btn1.setAttribute('id','returnMain')
     btn1.addEventListener('click',()=>{
@@ -67,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function handlePurchase() {
-    pcH('영수증');
+    pcH('구매목록');
   }
 
   purchaseHis.addEventListener('click',handlePurchase,true);
@@ -114,9 +126,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const goExit = document.getElementById('goExit');
 
-  goExit.addEventListener("click", () => {
-    window.open("/exit.html", "_self");
-  });
+  // goExit.addEventListener("click", () => {
+  //   window.open("/exit.html", "_self");
+  // });
 
   // receipt를 snappersImage 위에 위치시키는 함수
   function positionReceiptAboveSnappers() {
@@ -282,12 +294,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   document
-    .getElementById("purchase-history")
-    .addEventListener("click", function () {
-      window.location.href = "gume.html";
-    });
-
-  document
     .getElementById("decideBuy")
     .addEventListener("click", function (event) {
       event.preventDefault();
@@ -305,32 +311,32 @@ document.addEventListener("DOMContentLoaded", function () {
       }).then((response) => {
         if (response.ok) {
           alert("구매가 완료되었습니다.");
-          const receipt = document.getElementById("receipt");
-          const receCon = document.getElementById("receiptContent");
-          receCon.innerHTML = "";
-          let test = "";
-          for (key in cartCounts) {
-            test += `<div>${cartCounts[key].Pname} ${cartCounts[key].count}개 ${
-              cartCounts[key].price * cartCounts[key].count
-            }원</div>`;
-          }
-          let totalmoney = document.createElement("div");
-          let allmoney = Object.keys(cartCounts);
-          let result = allmoney.reduce((sum, item) => {
-            return sum + cartCounts[item].price * cartCounts[item].count;
-          }, 0);
+          // const receipt = document.getElementById("receipt");
+          // const receCon = document.getElementById("receiptContent");
+          // receCon.innerHTML = "";
+          // let test = "";
+          // for (key in cartCounts) {
+          //   test += `<div>${cartCounts[key].Pname} ${cartCounts[key].count}개 ${
+          //     cartCounts[key].price * cartCounts[key].count
+          //   }원</div>`;
+          // }
+          // let totalmoney = document.createElement("div");
+          // let allmoney = Object.keys(cartCounts);
+          // let result = allmoney.reduce((sum, item) => {
+          //   return sum + cartCounts[item].price * cartCounts[item].count;
+          // }, 0);
 
-          totalmoney.textContent = `합계금액 : ${result}원`;
+          // totalmoney.textContent = `합계금액 : ${result}원`;
 
-          receCon.innerHTML = test;
-          receCon.appendChild(totalmoney);
-          receipt.style.visibility = "visible";
-          cartCounts = {};
-          totalPrice = 0;
-          document.getElementById("cart-items").innerHTML = "";
-          document.getElementById(
-            "total-price"
-          ).textContent = `${totalPrice}원`;
+          // receCon.innerHTML = test;
+          // receCon.appendChild(totalmoney);
+          // receipt.style.visibility = "visible";
+          // cartCounts = {};
+          // totalPrice = 0;
+          // document.getElementById("cart-items").innerHTML = "";
+          // document.getElementById(
+          //   "total-price"
+          // ).textContent = `${totalPrice}원`;
         } else {
           alert("구매 중 오류가 발생했습니다.");
         }
