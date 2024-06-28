@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const decideBuyBtn = document.getElementById("decideBuy");
   const returnMainBtn = document.getElementById("returnMain"); // 추가된 부분
   const receipt = document.getElementById("receipt");
+  const purchaseHis = document.getElementById('purchase-history');
 
   clickDiv.addEventListener("click", () => {
     itemContainer.classList.toggle("active");
