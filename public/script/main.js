@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const decideBuyBtn = document.getElementById("decideBuy");
   const returnMainBtn = document.getElementById("returnMain"); // 추가된 부분
   const receipt = document.getElementById("receipt");
+  const purchaseHis = document.getElementById('purchase-history');
 
   clickDiv.addEventListener("click", () => {
     itemContainer.classList.toggle("active");
@@ -24,6 +25,52 @@ document.addEventListener("DOMContentLoaded", () => {
       textOverlay.style.visibility = "hidden";
     }
   });
+
+  function pcH(Htext) {
+    purchaseHis.removeEventListener('click',handlePurchase,true);
+    let firstDiv = document.createElement('div');
+    let tagH3 = document.createElement('h3');
+    let secondDiv = document.createElement('div');
+    let thirdDiv = document.createElement('div');
+    let btn1 = document.createElement('button');
+    let btn2 = document.createElement('button');
+
+    tagH3.textContent = Htext;
+
+    firstDiv.appendChild(tagH3);
+
+    secondDiv.textContent = '';
+
+    btn1.setAttribute('id','returnMain')
+    btn1.addEventListener('click',()=>{
+      purchaseHis.addEventListener('click', handlePurchase,true);
+      receipt.style.display = 'none';
+      receipt.innerHTML = '';
+    });
+    btn1.textContent = '더 구매할래';
+
+    btn2.setAttribute('id','goExit')
+    btn2.textContent = '상점나가기';
+    btn2.addEventListener('click',()=>{
+      window.open('/exit.html','_self');
+    });
+    
+    thirdDiv.appendChild(btn1);
+    thirdDiv.appendChild(btn2);
+    
+    receipt.appendChild(firstDiv);
+    receipt.appendChild(secondDiv);
+    receipt.appendChild(thirdDiv);
+
+    receipt.style.display = 'block';
+    positionReceiptAboveSnappers();
+  }
+
+  function handlePurchase() {
+    pcH('영수증');
+  }
+
+  purchaseHis.addEventListener('click',handlePurchase,true);
 
   document.addEventListener("mousemove", (event) => {
     const windowWidth = window.innerWidth;
@@ -65,12 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
     positionReceiptAboveSnappers(); // receipt를 snappersImage 위에 위치시키는 함수 호출
   });
 
-  // returnMain 버튼 클릭 시 receipt 영역 숨기기
-  returnMainBtn.addEventListener("click", () => {
-    receipt.style.display = "none";
-  });
-
-  const goExit = document.getElementById("goExit");
+  const goExit = document.getElementById('goExit');
 
   goExit.addEventListener("click", () => {
     window.open("/exit.html", "_self");
