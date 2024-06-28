@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
       .then((response) => {
         if (response.ok) {
           // main.html로 이동
-          window.location.href = `/public/html/main.html`;
+          window.location.href = `/main.html`;
         } else {
           alert('Error: Unable to start. Please try again.');
         }
