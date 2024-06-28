@@ -60,15 +60,8 @@ document.addEventListener("DOMContentLoaded", () => {
       receipt.innerHTML = '';
     });
     btn1.textContent = '더 구매할래';
-
-    btn2.setAttribute('id','goExit')
-    btn2.textContent = '상점나가기';
-    btn2.addEventListener('click',()=>{
-      window.open('/exit.html','_self');
-    });
     
     thirdDiv.appendChild(btn1);
-    thirdDiv.appendChild(btn2);
     
     receipt.appendChild(firstDiv);
     receipt.appendChild(secondDiv);
