@@ -28,14 +28,15 @@ document.addEventListener("DOMContentLoaded", () => {
   //첫 소지금 설정
   function updateMoney() {
     const xhr = new XMLHttpRequest();
-    xhr.open("GET", "/searchuserAcc");
-    xhr.send();
+    xhr.open("POST", "/searchuserAcc");
+    xhr.send(JSON.stringify({ id: id }));
     xhr.addEventListener("load", () => {
-      const startmoney = xhr.responseText;
-      console.log(startmoney);
-      // nowmoney.textContent = startmoney;
+      const startmoney = JSON.parse(xhr.responseText);
+      nowmoney.textContent = `${startmoney.AccBalance}원`;
     });
   }
+
+  updateMoney();
 
   function pcH(Htext) {
     purchaseHis.removeEventListener("click", handlePurchase, true);
