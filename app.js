@@ -36,6 +36,17 @@ const server = http.createServer((req, res) => {
       return;
     }
 
+    if (req.url === "/searchuserAcc") {
+      // 여기서 사용자 계정 정보를 조회하는 로직을 구현합니다.
+      // 예를 들어, 데이터베이스에서 사용자의 잔액을 조회하는 코드를 작성합니다.
+
+      // 임시로 하드코딩된 값을 사용합니다. 실제로는 데이터베이스 조회 결과를 사용해야 합니다.
+      const userBalance = 10000;
+
+      res.writeHead(200, { "Content-Type": "text/plain" });
+      res.end(userBalance.toString());
+    }
+
     if (req.url === "/searchItem") {
       // /searchItem 요청 처리
       const db = connectDB();
