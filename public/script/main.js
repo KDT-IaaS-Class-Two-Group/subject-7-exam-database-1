@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const itemImages = document.querySelectorAll(".item-container img");
   const decideBuyBtn = document.getElementById("decideBuy");
   const receipt = document.getElementById("receipt");
-  const purchaseHis = document.getElementById('purchase-history');
+  const purchaseHis = document.getElementById("purchase-history");
 
   clickDiv.addEventListener("click", () => {
     itemContainer.classList.toggle("active");
@@ -25,55 +25,55 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   function pcH(Htext) {
-    purchaseHis.removeEventListener('click',handlePurchase,true);
-    let firstDiv = document.createElement('div');
-    let tagH3 = document.createElement('h3');
-    let secondDiv = document.createElement('div');
-    let thirdDiv = document.createElement('div');
-    let btn1 = document.createElement('button');
-    let btn2 = document.createElement('button');
+    purchaseHis.removeEventListener("click", handlePurchase, true);
+    let firstDiv = document.createElement("div");
+    let tagH3 = document.createElement("h3");
+    let secondDiv = document.createElement("div");
+    let thirdDiv = document.createElement("div");
+    let btn1 = document.createElement("button");
+    let btn2 = document.createElement("button");
 
     tagH3.textContent = Htext;
 
     firstDiv.appendChild(tagH3);
 
     const xhr = new XMLHttpRequest();
-    xhr.open('POST','/readHistory');
-    xhr.send(JSON.stringify({id : id}));
-    xhr.addEventListener('load',()=>{
+    xhr.open("POST", "/readHistory");
+    xhr.send(JSON.stringify({ id: id }));
+    xhr.addEventListener("load", () => {
       let result = JSON.parse(xhr.responseText);
       console.log(result);
 
-      result.forEach((item)=>{
-        let pTag = document.createElement('p');
-        pTag.textContent = `${item.Pname} ${item.Pprice}원 ${item.Quantity}개`
+      result.forEach((item) => {
+        let pTag = document.createElement("p");
+        pTag.textContent = `${item.Pname} ${item.Pprice}원 ${item.Quantity}개`;
         secondDiv.appendChild(pTag);
       });
     });
 
-    btn1.setAttribute('id','returnMain')
-    btn1.addEventListener('click',()=>{
-      purchaseHis.addEventListener('click', handlePurchase,true);
-      receipt.style.display = 'none';
-      receipt.innerHTML = '';
+    btn1.setAttribute("id", "returnMain");
+    btn1.addEventListener("click", () => {
+      purchaseHis.addEventListener("click", handlePurchase, true);
+      receipt.style.display = "none";
+      receipt.innerHTML = "";
     });
-    btn1.textContent = '더 구매할래';
+    btn1.textContent = "더 구매할래";
 
     thirdDiv.appendChild(btn1);
-    
+
     receipt.appendChild(firstDiv);
     receipt.appendChild(secondDiv);
     receipt.appendChild(thirdDiv);
 
-    receipt.style.display = 'block';
+    receipt.style.display = "block";
     positionReceiptAboveSnappers();
   }
 
   function handlePurchase() {
-    pcH('구매목록');
+    pcH("구매목록");
   }
 
-  purchaseHis.addEventListener('click',handlePurchase,true);
+  purchaseHis.addEventListener("click", handlePurchase, true);
 
   document.addEventListener("mousemove", (event) => {
     const windowWidth = window.innerWidth;
@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
     positionReceiptAboveSnappers(); // receipt를 snappersImage 위에 위치시키는 함수 호출
   });
 
-  const goExit = document.getElementById('goExit');
+  const goExit = document.getElementById("goExit");
 
   // goExit.addEventListener("click", () => {
   //   window.open("/exit.html", "_self");
@@ -291,6 +291,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const orderData = {
         id: id,
         ccount: cartCounts,
+        total: totalPrice,
       };
       console.log(orderData);
       fetch("/buy", {
@@ -301,60 +302,60 @@ document.addEventListener("DOMContentLoaded", function () {
         body: JSON.stringify(orderData),
       }).then((response) => {
         if (response.ok) {
-          const decide = document.getElementById('decideBuy');
-          const receipt = document.getElementById('receipt');
+          const decide = document.getElementById("decideBuy");
+          const receipt = document.getElementById("receipt");
           alert("구매가 완료되었습니다.");
-            let firstDiv = document.createElement('div');
-            let tagH3 = document.createElement('h3');
-            let secondDiv = document.createElement('div');
-            let thirdDiv = document.createElement('div');
-            let btn1 = document.createElement('button');
-            let btn2 = document.createElement('button');
-        
-            tagH3.textContent = '영수증';
-        
-            firstDiv.appendChild(tagH3);
-        
-            btn1.setAttribute('id','returnMain')
-            btn1.addEventListener('click',()=>{
-              receipt.style.display = 'none';
-              receipt.innerHTML = '';
-            });
-            btn1.textContent = '더 구매할래';
-        
-            let innerCon = orderData.ccount
-            let content = "";
-            for (key in innerCon) {
-              content += `<div>${innerCon[key].Pname} ${innerCon[key].count}개 ${
-                innerCon[key].price * innerCon[key].count
-              }원</div>`;
-            }
-            let totalmoney = document.createElement("div");
-            let allmoney = Object.keys(innerCon);
-            let result = allmoney.reduce((sum, item) => {
-              return sum + innerCon[item].price * innerCon[item].count;
-            }, 0);
+          let firstDiv = document.createElement("div");
+          let tagH3 = document.createElement("h3");
+          let secondDiv = document.createElement("div");
+          let thirdDiv = document.createElement("div");
+          let btn1 = document.createElement("button");
+          let btn2 = document.createElement("button");
 
-            totalmoney.textContent = `합계금액 : ${result}원`;
+          tagH3.textContent = "영수증";
 
-            secondDiv.innerHTML = content;
-            secondDiv.appendChild(totalmoney);
+          firstDiv.appendChild(tagH3);
 
-            btn2.setAttribute('id','goExit');
-            btn2.addEventListener('click',()=>{
-              window.open('/exit.html','_self');
-            });
-            btn2.textContent = '상점나가기';
-            
-            thirdDiv.appendChild(btn1);
-            thirdDiv.appendChild(btn2);
-            
-            receipt.appendChild(firstDiv);
-            receipt.appendChild(secondDiv);
-            receipt.appendChild(thirdDiv);
-        
-            receipt.style.display = 'block';
-            receipt.style.position = 'absolute';
+          btn1.setAttribute("id", "returnMain");
+          btn1.addEventListener("click", () => {
+            receipt.style.display = "none";
+            receipt.innerHTML = "";
+          });
+          btn1.textContent = "더 구매할래";
+
+          let innerCon = orderData.ccount;
+          let content = "";
+          for (key in innerCon) {
+            content += `<div>${innerCon[key].Pname} ${innerCon[key].count}개 ${
+              innerCon[key].price * innerCon[key].count
+            }원</div>`;
+          }
+          let totalmoney = document.createElement("div");
+          let allmoney = Object.keys(innerCon);
+          let result = allmoney.reduce((sum, item) => {
+            return sum + innerCon[item].price * innerCon[item].count;
+          }, 0);
+
+          totalmoney.textContent = `합계금액 : ${result}원`;
+
+          secondDiv.innerHTML = content;
+          secondDiv.appendChild(totalmoney);
+
+          btn2.setAttribute("id", "goExit");
+          btn2.addEventListener("click", () => {
+            window.open("/exit.html", "_self");
+          });
+          btn2.textContent = "상점나가기";
+
+          thirdDiv.appendChild(btn1);
+          thirdDiv.appendChild(btn2);
+
+          receipt.appendChild(firstDiv);
+          receipt.appendChild(secondDiv);
+          receipt.appendChild(thirdDiv);
+
+          receipt.style.display = "block";
+          receipt.style.position = "absolute";
         } else {
           alert("구매 중 오류가 발생했습니다.");
         }
