@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const decideBuyBtn = document.getElementById("decideBuy");
   const receipt = document.getElementById("receipt");
   const purchaseHis = document.getElementById("purchase-history");
+  const nowmoney = document.getElementById("nowmoney");
 
   clickDiv.addEventListener("click", () => {
     itemContainer.classList.toggle("active");
@@ -23,6 +24,18 @@ document.addEventListener("DOMContentLoaded", () => {
       textOverlay.style.visibility = "hidden";
     }
   });
+
+  //첫 소지금 설정
+  function updateMoney() {
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", "/searchuserAcc");
+    xhr.send();
+    xhr.addEventListener("load", () => {
+      const startmoney = xhr.responseText;
+      console.log(startmoney);
+      // nowmoney.textContent = startmoney;
+    });
+  }
 
   function pcH(Htext) {
     purchaseHis.removeEventListener("click", handlePurchase, true);
