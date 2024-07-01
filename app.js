@@ -57,15 +57,6 @@ const server = http.createServer((req, res) => {
           }
         });
       });
-    } else if (req.url === "/searchuserAcc") {
-      // 여기서 사용자 계정 정보를 조회하는 로직을 구현합니다.
-      // 예를 들어, 데이터베이스에서 사용자의 잔액을 조회하는 코드를 작성합니다.
-
-      // 임시로 하드코딩된 값을 사용합니다. 실제로는 데이터베이스 조회 결과를 사용해야 합니다.
-      const userBalance = 10000;
-
-      res.writeHead(200, { "Content-Type": "text/plain" });
-      res.end(userBalance.toString());
     } else {
       let filePath;
       let contentType = "text/html; charset=UTF-8"; // 기본 값은 HTML로 설정
@@ -205,6 +196,36 @@ const server = http.createServer((req, res) => {
             });
           }
         );
+      });
+    } else if (req.url === "/searchuserAcc") {
+      let body = "";
+
+      req.on("data", (chunk) => {
+        body += chunk.toString();
+      });
+
+      req.on("end", () => {
+        const parsedData = JSON.parse(body);
+        const id = parsedData.id;
+        const db = connectDB();
+        const selectQuery = "SELECT AccBalance FROM user WHERE id = ?";
+
+        db.get(selectQuery, [id], (err, rows) => {
+          if (err) {
+            console.error("데이터 조회 중 오류 발생:", err);
+            handleErrorResponse(res, 500, "Internal Server Error");
+          } else {
+            res.writeHead(200, {
+              "Content-Type": "application/json; charset=UTF-8",
+            });
+            res.end(JSON.stringify(rows));
+          }
+          db.close((err) => {
+            if (err) {
+              console.error("데이터베이스 닫기 중 오류 발생:", err);
+            }
+          });
+        });
       });
     } else if (req.url === "/readHistory") {
       let body = "";
