@@ -99,28 +99,44 @@ const server = http.createServer((req, res) => {
         const id = data.id;
         const name = data.name;
 
-        // 데이터베이스에 연결하고 id가 이미 존재하는지 확인
+        // 데이터베이스에 연결하고 id와 name이 일치하는지 확인
         const db = connectDB();
-        const checkQuery =
-          "SELECT COUNT(*) AS count, AccBalance FROM user WHERE id = ?";
+        const checkQuery = "SELECT id, name FROM user WHERE id = ?";
 
         db.get(checkQuery, [id], (err, row) => {
           if (err) {
             console.error("데이터 조회 중 오류 발생:", err);
-            handleErrorResponse(res, 500, "Internal Serve Error");
-          } else if (row.count > 0) {
-            res.end();
+            handleErrorResponse(res, 500, "Internal Server Error");
           } else {
-            // id가 존재하지 않는 경우 데이터 삽입
-            const insertQuery =
-              "INSERT INTO user (id, name, AccBalance) VALUES (?, ?, 100000)";
-
-            db.run(insertQuery, [id, name], (err) => {
-              if (err) {
-                console.error("데이터 삽입 중 오류 발생:", err);
-                handleErrorResponse(res, 500, "Internal Server Error");
+            if (row) {
+              if (row.name === name) {
+                // ID와 이름이 일치하는 경우
+                res.writeHead(200, { "Content-Type": "application/json" });
+                res.end(JSON.stringify({ success: true }));
+              } else {
+                // ID는 같지만 이름이 다른 경우
+                res.writeHead(200, { "Content-Type": "application/json" });
+                res.end(
+                  JSON.stringify({
+                    success: false,
+                    message: "아이디는 같지만 이름이 일치하지 않습니다.",
+                  })
+                );
               }
-            });
+            } else {
+              // 새로운 유저 추가
+              const insertQuery =
+                "INSERT INTO user (id, name, AccBalance) VALUES (?, ?, 100000)";
+              db.run(insertQuery, [id, name], (err) => {
+                if (err) {
+                  console.error("데이터 삽입 중 오류 발생:", err);
+                  handleErrorResponse(res, 500, "Internal Server Error");
+                } else {
+                  res.writeHead(200, { "Content-Type": "application/json" });
+                  res.end(JSON.stringify({ success: true }));
+                }
+              });
+            }
           }
           db.close((err) => {
             if (err) {
