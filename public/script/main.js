@@ -316,9 +316,12 @@ document.addEventListener("DOMContentLoaded", function () {
         body: JSON.stringify(orderData),
       }).then((response) => {
         if (response.ok) {
+          const cartItemsElement = document.getElementById("cart-items");
           const decide = document.getElementById("decideBuy");
           const receipt = document.getElementById("receipt");
           alert("구매가 완료되었습니다.");
+          cartItemsElement.innerHTML = "";
+          document.getElementById("total-price").textContent = `0원`;
           let firstDiv = document.createElement("div");
           let tagH3 = document.createElement("h3");
           let secondDiv = document.createElement("div");
@@ -370,6 +373,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
           receipt.style.display = "block";
           receipt.style.position = "absolute";
+
+          function updateMoney() {
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "/searchuserAcc");
+            xhr.send(JSON.stringify({ id: id }));
+            xhr.addEventListener("load", () => {
+              const startmoney = JSON.parse(xhr.responseText);
+              nowmoney.textContent = `${startmoney.AccBalance}원`;
+            });
+          }
+
+          updateMoney();
         } else {
           alert("구매 중 오류가 발생했습니다.");
         }
