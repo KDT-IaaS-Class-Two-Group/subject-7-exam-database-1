@@ -9,6 +9,7 @@ const {
   handleFileReadError,
 } = require("./module/server/module_server_error");
 const updateOHistory = require("./module//database/module_db_WriteOHistory");
+const { pid } = require("process");
 
 const PORT = process.env.PORT || 8080;
 const dbPath = path.join(__dirname, "database", "database.db");
@@ -98,63 +99,44 @@ const server = http.createServer((req, res) => {
         const id = data.id;
         const name = data.name;
 
-        // 데이터베이스에 연결하고 id가 이미 존재하는지 확인
+        // 데이터베이스에 연결하고 id와 name이 일치하는지 확인
         const db = connectDB();
-        const checkQuery = "SELECT COUNT(*) AS count FROM user WHERE id = ?";
+        const checkQuery = "SELECT id, name FROM user WHERE id = ?";
 
         db.get(checkQuery, [id], (err, row) => {
           if (err) {
             console.error("데이터 조회 중 오류 발생:", err);
-            handleErrorResponse(res, 500, "Internal Serve Error");
-          } else if (row.count > 0) {
-            // id가 이미 존재하는 경우 mainPage.html 페이지를 응답
-            const filePath = path.join(
-              __dirname,
-              "public",
-              "html",
-              "main.html"
-            );
-            fs.readFile(filePath, (err, data) => {
-              if (err) {
-                console.error("파일 읽기 에러:", err);
-                handleErrorResponse(res, 500, "Internal Server Error");
-              } else {
-                res.writeHead(200, {
-                  "Content-Type": "text/html; charset=UTF-8",
-                });
-                res.end(data);
-              }
-            });
+            handleErrorResponse(res, 500, "Internal Server Error");
           } else {
-            // id가 존재하지 않는 경우 데이터 삽입
-            const insertQuery =
-              "INSERT INTO user (id, name, AccBalance) VALUES (?, ?, ?)";
-
-            db.run(insertQuery, [id, name, 100000], (err) => {
-              if (err) {
-                console.error("데이터 삽입 중 오류 발생:", err);
-                handleErrorResponse(res, 500, "Internal Server Error");
+            if (row) {
+              if (row.name === name) {
+                // ID와 이름이 일치하는 경우
+                res.writeHead(200, { "Content-Type": "application/json" });
+                res.end(JSON.stringify({ success: true }));
               } else {
-                // 데이터베이스에 성공적으로 저장되면 mainPage.html 페이지를 응답
-                const filePath = path.join(
-                  __dirname,
-                  "public",
-                  "html",
-                  "main.html"
+                // ID는 같지만 이름이 다른 경우
+                res.writeHead(200, { "Content-Type": "application/json" });
+                res.end(
+                  JSON.stringify({
+                    success: false,
+                    message: "아이디는 같지만 이름이 일치하지 않습니다.",
+                  })
                 );
-                fs.readFile(filePath, (err, data) => {
-                  if (err) {
-                    console.error("파일 읽기 에러:", err);
-                    handleErrorResponse(res, 500, "Internal Server Error");
-                  } else {
-                    res.writeHead(200, {
-                      "Content-Type": "text/html; charset=UTF-8",
-                    });
-                    res.end(data);
-                  }
-                });
               }
-            });
+            } else {
+              // 새로운 유저 추가
+              const insertQuery =
+                "INSERT INTO user (id, name, AccBalance) VALUES (?, ?, 100000)";
+              db.run(insertQuery, [id, name], (err) => {
+                if (err) {
+                  console.error("데이터 삽입 중 오류 발생:", err);
+                  handleErrorResponse(res, 500, "Internal Server Error");
+                } else {
+                  res.writeHead(200, { "Content-Type": "application/json" });
+                  res.end(JSON.stringify({ success: true }));
+                }
+              });
+            }
           }
           db.close((err) => {
             if (err) {
@@ -175,13 +157,17 @@ const server = http.createServer((req, res) => {
         const orderData = JSON.parse(body);
         const { ccount } = orderData;
         const purchasedate = new Date().toISOString().split("T")[0]; // YYYY-MM-DD 형식
+        const buytotal = orderData.total; // 구매한 총 가격을 할당
+        let updatetotal = 0; // let으로 선언하여 변경 가능하게 함
 
-        const db = connectDB();
-        const insertQuery = `INSERT INTO OrderHistory (id , Pname, Pprice, Quantity, PurchaseDate) VALUES (?,?, ?, ?, ?)`;
-        // orderData의 각 항목에 대해 updateOHistory 호출
+        const db = connectDB(); // 데이터베이스 연결
+        const insertQuery = `INSERT INTO OrderHistory (id, Pname, Pprice, Quantity, PurchaseDate) VALUES (?, ?, ?, ?, ?)`;
+        const updateaccbalance = "UPDATE user SET AccBalance = ? WHERE id = ?";
+        const pid = orderData.id; // 실제 사용자 ID를 여기에 할당
+
+        // orderData의 각 항목에 대해 데이터 삽입
         for (const key in ccount) {
           const item = ccount[key];
-          const pid = orderData.id; // 실제 사용자 ID를 여기에 할당
           db.serialize(() => {
             const stmt = db.prepare(insertQuery, (err) => {
               if (err) {
@@ -190,44 +176,96 @@ const server = http.createServer((req, res) => {
               console.log(`데이터가 성공적으로 삽입되었습니다`);
             });
             stmt.run(pid, item.Pname, item.price, item.count, purchasedate);
-
             stmt.finalize();
           });
         }
-        // 데이터베이스 닫기
-        db.close((err) => {
-          if (err) {
-            return console.error(
-              "데이터베이스 닫기 중 오류 발생:",
-              err.message
-            );
+
+        // 사용자의 현재 잔액을 가져와 업데이트
+        db.get(
+          "SELECT AccBalance FROM user WHERE id = ?",
+          [pid],
+          (err, row) => {
+            if (err) {
+              return console.error(err.message);
+            }
+            updatetotal = row.AccBalance - buytotal;
+            db.run(updateaccbalance, [updatetotal, pid], function (err) {
+              if (err) {
+                return console.error(err.message);
+              }
+              console.log(`Row(s) updated: ${this.changes}`);
+
+              // 데이터베이스 닫기
+              db.close((err) => {
+                if (err) {
+                  return console.error(
+                    "데이터베이스 닫기 중 오류 발생:",
+                    err.message
+                  );
+                }
+                console.log("데이터베이스 연결이 성공적으로 종료되었습니다.");
+
+                // 클라이언트에게 응답
+                res.writeHead(200, { "Content-Type": "application/json" });
+                res.end(JSON.stringify({ success: true }));
+              });
+            });
           }
-          console.log("데이터베이스 연결이 성공적으로 종료되었습니다.");
-        });
-
-        res.writeHead(200, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ success: true }));
+        );
       });
-    } else if (req.url === '/readHistory') {
-      let body = '';
+    } else if (req.url === "/searchuserAcc") {
+      let body = "";
 
-      req.on('data', (chunk) => {
+      req.on("data", (chunk) => {
         body += chunk.toString();
       });
 
-      req.on('end', () => {
+      req.on("end", () => {
+        const parsedData = JSON.parse(body);
+        const id = parsedData.id;
+        const db = connectDB();
+        const selectQuery = "SELECT AccBalance FROM user WHERE id = ?";
+
+        db.get(selectQuery, [id], (err, rows) => {
+          if (err) {
+            console.error("데이터 조회 중 오류 발생:", err);
+            handleErrorResponse(res, 500, "Internal Server Error");
+          } else {
+            res.writeHead(200, {
+              "Content-Type": "application/json; charset=UTF-8",
+            });
+            res.end(JSON.stringify(rows));
+          }
+          db.close((err) => {
+            if (err) {
+              console.error("데이터베이스 닫기 중 오류 발생:", err);
+            }
+          });
+        });
+      });
+    } else if (req.url === "/readHistory") {
+      let body = "";
+
+      req.on("data", (chunk) => {
+        body += chunk.toString();
+      });
+
+      req.on("end", () => {
         const parsedData = JSON.parse(body);
         const id = parsedData.id;
 
         const db = connectDB();
-        const selectQuery = 'SELECT Pname, Pprice, Quantity FROM OrderHistory WHERE id = ?';
+        const selectQuery =
+          "SELECT Pname, Pprice, Quantity FROM OrderHistory WHERE id = ?";
 
         db.all(selectQuery, [id], (err, rows) => {
           if (err) {
             console.error("데이터 조회 중 오류 발생:", err);
             handleErrorResponse(res, 500, "Internal Server Error");
           } else {
-            res.writeHead(200, { "Content-Type": "application/json; charset=UTF-8" });
+            res.writeHead(200, {
+              "Content-Type": "application/json; charset=UTF-8",
+            });
             res.end(JSON.stringify(rows));
           }
           db.close((err) => {
