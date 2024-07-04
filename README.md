@@ -32,12 +32,6 @@
 <details>
   <summary><h2>커밋 컨벤션</h2></summary>
   <div markdown="1">
-
-  </div>
-</details>
-
-커밋 컨벤션
-    
 > 예시
 >
 ```jsx
@@ -46,6 +40,12 @@
 ✨ fix_정호연 : user 수정
  
 ✅ sav_이연승 : main.js 중간 저장
+
+  </div>
+</details>
+
+커밋 컨벤션
+    
  
 del_김정수 : img 삭제
 ```
