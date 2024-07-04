@@ -14,7 +14,7 @@
 
 <details>
   <summary>첫번째토글</summary>
-  1. Pull request와 merge 관련하여 Slack으로 메세지를 보낼 경우 특정 멤버에게 멘션을 달아주세요.
+  <div>1. Pull request와 merge 관련하여 Slack으로 메세지를 보낼 경우 특정 멤버에게 멘션을 달아주세요.</div>
 2. 메세지를 확인했다면 해당 댓글에 이모지를 사용하여 공감해주세요.
 3. 파일 1개 당 commit 1개를 지켜주세요.
 4. Commit 전 Ctrl + S (저장) 을 했는지 확인해주세요.
