@@ -33,7 +33,7 @@
   <summary><h2>커밋 컨벤션</h2></summary>
   <div markdown="1">
 > 예시
->
+
 📌 feat_정호연 : user 수정
  
 ✨ fix_정호연 : user 수정
