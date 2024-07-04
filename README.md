@@ -24,10 +24,9 @@
 커밋 컨벤션
     
 > 예시
->  📌 feat_정호연 : user 수정
-  ✨ fix_정호연 : user 수정
-  ✅ sav_이연승 : main.js 중간 저장
-
-del_김정수 : img 삭제
+> 📌 feat_정호연 : user 수정
+> ✨ fix_정호연 : user 수정
+> ✅ sav_이연승 : main.js 중간 저장
+> del_김정수 : img 삭제
 
 [제목 없는 데이터베이스](https://www.notion.so/c9298c79e3cd4292bcba16e082efa7c5?pvs=21)
