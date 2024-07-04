@@ -27,6 +27,7 @@
     // 예시
     module_server_template.js
     ```
+</details>
 
   
 ## Git & Github 규칙
