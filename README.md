@@ -8,7 +8,7 @@
 
 # 팀 규칙👀
 
----
+
 
 <details>
   <summary><h3>필독❗️</h3></summary>
