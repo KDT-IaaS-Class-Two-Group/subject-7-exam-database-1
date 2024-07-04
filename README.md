@@ -5,7 +5,7 @@
 
 # 팀 규칙👀
 <details>
-  <summary><h3>필독❗️</h3></summary>
+  <summary><h2>필독❗️</h2></summary>
   <div>1. Pull request와 merge 관련하여 Slack으로 메세지를 보낼 경우 특정 멤버에게 멘션을 달아주세요.</div>
   <div>2. 메세지를 확인했다면 해당 댓글에 이모지를 사용하여 공감해주세요.</div>
   <div>3. 파일 1개 당 commit 1개를 지켜주세요.</div>
@@ -25,11 +25,6 @@
 - 커밋 컨벤션
     
     > 예시
-    > 
-    
-    참고 블로그 : [Gitmoji 사용법](https://inpa.tistory.com/entry/GIT-⚡️-Gitmoji-사용법-Gitmoji-cli)
-    
-    ---
     
     📌 feat_정호연 : user 수정 
     
