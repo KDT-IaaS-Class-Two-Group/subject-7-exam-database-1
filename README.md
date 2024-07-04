@@ -29,6 +29,13 @@
 
   
 ## Git & Github 규칙
+<details>
+  <summary><h2>커밋 컨벤션</h2></summary>
+  <div markdown="1">
+
+  </div>
+</details>
+
 커밋 컨벤션
     
 > 예시
