@@ -10,8 +10,6 @@
 
 ---
 
-## 필독❗️
-
 <details>
   <summary><h3>필독❗️</h3></summary>
   <div>1. Pull request와 merge 관련하여 Slack으로 메세지를 보낼 경우 특정 멤버에게 멘션을 달아주세요.</div>
