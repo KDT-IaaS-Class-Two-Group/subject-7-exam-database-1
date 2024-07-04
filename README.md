@@ -31,7 +31,7 @@
     최상위 폴더_이 파일을 적용할 파일명_이 파일의 기능.파일 확장자
     // 예시
     module_server_template.js
-    
+    ```
 </details>
 
 1. Pull request와 merge 관련하여 Slack으로 메세지를 보낼 경우 특정 멤버에게 멘션을 달아주세요.
