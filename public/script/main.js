@@ -321,6 +321,7 @@ document.addEventListener("DOMContentLoaded", function () {
           const receipt = document.getElementById("receipt");
           alert("구매가 완료되었습니다.");
           cartItemsElement.innerHTML = "";
+          cartCounts = {};
           document.getElementById("total-price").textContent = `0원`;
           let firstDiv = document.createElement("div");
           let tagH3 = document.createElement("h3");
