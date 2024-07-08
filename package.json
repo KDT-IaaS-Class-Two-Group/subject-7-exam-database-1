@@ -10,5 +10,8 @@
   "description": "",
   "dependencies": {
     "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.3"
   }
 }
