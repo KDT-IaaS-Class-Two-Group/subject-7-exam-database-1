@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
     localStorage.setItem("id", id);
     localStorage.setItem("name", name);
 
-    if (id === "") {
+    if (id === "" || name === "") {
       alert("값을 입력해주세요!");
       return;
     } else {
