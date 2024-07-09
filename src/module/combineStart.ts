@@ -25,7 +25,7 @@ export function combineStart(): void {
   setAttr(secInput, 'name', 'name');
   secDiv.appendChild(labelTag('name', 'NAME'));
   secDiv.appendChild(secInput);
-  let thrDiv = setAttr(makediv(), 'class', 'form-group');
+  let thrDiv = setAttr(makediv(), 'class', 'button-group');
   let thrInputSub = makeInput();
   setAttr(thrInputSub, 'type', 'submit');
   setAttr(thrInputSub, 'value', '게임시작');
