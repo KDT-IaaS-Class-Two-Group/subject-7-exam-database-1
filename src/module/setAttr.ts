@@ -2,6 +2,7 @@ export function setAttr(
   element: HTMLElement,
   key: string,
   value: string,
-): void {
+): HTMLElement {
   element.setAttribute(key, value);
+  return element;
 }
