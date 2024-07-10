@@ -1,0 +1,57 @@
+body {
+  background-size: cover;
+  font-family: 'NeoDunggeunmo';
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  color: #000;
+}
+
+#root {
+  text-align: center;
+  padding: 20px;
+  border: 2px solid #8b4513;
+  background-color: rgba(255, 248, 220, 0.7); /* 투명 배경 */
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  margin: 0px 20px;
+}
+
+#link {
+  margin-top: 20px;
+}
+
+button {
+  background-color: #d2691e;
+  color: #fff;
+  font-size: 18px;
+  padding: 10px 20px;
+  border: 2px solid #8b4513;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'NeoDunggeunmo';
+  text-shadow: 1px 1px 2px #000;
+  transition:
+    background-color 0.3s,
+    transform 0.3s;
+}
+
+button:hover {
+  background-color: #a0522d;
+  transform: scale(1.05);
+}
+
+button:active {
+  background-color: #8b4513;
+  transform: scale(1);
+}
+
+@font-face {
+  font-family: 'NeoDunggeunmo';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.3/NeoDunggeunmo.woff')
+    format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
