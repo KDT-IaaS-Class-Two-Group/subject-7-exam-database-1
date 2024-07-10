@@ -1,9 +1,9 @@
 const path = require('node:path');
 
-const popExt = function(ext,req) {
+const popExt = function (ext, req) {
   let fp = '';
   let ct = '';
-  
+
   if (ext === '.html') {
     fp = path.join('public', 'html', path.basename(req));
   } else if (ext === '.css') {
@@ -20,7 +20,7 @@ const popExt = function(ext,req) {
     ct = 'image/png';
   }
 
-  return {fp, ct};
-}
+  return { fp, ct };
+};
 
 module.exports = popExt;
